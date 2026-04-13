@@ -13,7 +13,6 @@ interface Props {
   onKnockoutPick: (round: keyof KnockoutPicks, matchIndex: number, winner: string | null) => void;
 }
 
-/** Resolves what team occupies a bracket slot, given all picks. */
 function resolveSlot(
   source: SlotSource,
   groupPicks: GroupPicks,
@@ -58,41 +57,37 @@ function MatchCard({ match, round, groupPicks, wildcardPicks, knockoutPicks, onP
 
   function handlePick(team: string) {
     if (!canPick) return;
-    const newWinner = currentWinner === team ? null : team;
-    onPick(match.id, newWinner);
+    onPick(match.id, currentWinner === team ? null : team);
   }
 
   return (
-    <div
-      className={[
-        'rounded-xl border text-xs transition-all duration-200 overflow-hidden',
-        canPick ? 'border-white/15 bg-pitch-800' : 'border-white/5 bg-pitch-800/40',
-      ].join(' ')}
-    >
+    <div className={[
+      'border transition-all duration-200',
+      canPick ? 'border-warm-200' : 'border-warm-100',
+    ].join(' ')}>
       {[home, away].map((team, idx) => {
         const isWinner = team !== null && currentWinner === team;
-        const isLoser = team !== null && currentWinner !== null && currentWinner !== team;
+        const isLoser  = team !== null && currentWinner !== null && currentWinner !== team;
         return (
           <button
             key={idx}
             onClick={() => team && handlePick(team)}
             disabled={!canPick || !team}
             className={[
-              'w-full flex items-center gap-2 px-3 py-2.5 transition-all duration-150',
-              idx === 0 ? 'border-b border-white/10' : '',
-              !team ? 'cursor-default' : 'cursor-pointer',
+              'w-full flex items-center gap-2 px-3 py-2.5 text-xs transition-all duration-150',
+              idx === 0 ? 'border-b border-warm-100' : '',
               isWinner
-                ? 'bg-gold-500/20 text-gold-300 font-bold'
+                ? 'bg-warm-900 text-cream-100'
                 : isLoser
-                ? 'opacity-30'
+                ? 'text-warm-200'
                 : team
-                ? 'hover:bg-white/5 text-white/70 hover:text-white'
-                : 'text-white/20',
+                ? 'text-warm-600 hover:text-warm-900 hover:bg-cream-200 cursor-pointer'
+                : 'text-warm-200 cursor-default',
             ].join(' ')}
           >
-            <span className="text-sm">{team ? (TEAM_FLAGS[team] ?? '🏳') : '—'}</span>
-            <span className="truncate font-medium">{team ?? 'TBD'}</span>
-            {isWinner && <span className="ml-auto text-gold-400 text-sm">✓</span>}
+            <span>{team ? (TEAM_FLAGS[team] ?? '🏳') : ''}</span>
+            <span className="truncate">{team ?? '—'}</span>
+            {isWinner && <span className="ml-auto text-warm-400 text-xs">✓</span>}
           </button>
         );
       })}
@@ -112,11 +107,9 @@ interface RoundColumnProps {
 
 function RoundColumn({ label, matches, round, groupPicks, wildcardPicks, knockoutPicks, onPick }: RoundColumnProps) {
   return (
-    <div className="flex flex-col min-w-[160px]">
-      <h4 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-3 text-center">
-        {label}
-      </h4>
-      <div className="flex flex-col gap-2">
+    <div className="flex flex-col min-w-[156px]">
+      <p className="text-xs tracking-widest uppercase text-warm-400 mb-4 text-center">{label}</p>
+      <div className="flex flex-col gap-1.5">
         {matches.map((match) => (
           <MatchCard
             key={match.id}
@@ -133,22 +126,18 @@ function RoundColumn({ label, matches, round, groupPicks, wildcardPicks, knockou
   );
 }
 
-export function KnockoutBracket({
-  groupPicks,
-  wildcardPicks,
-  knockoutPicks,
-  onWildcardChange,
-  onKnockoutPick,
-}: Props) {
-  const allGroupsDone = Object.keys(groupPicks).length === 12 &&
+export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWildcardChange, onKnockoutPick }: Props) {
+  const allGroupsDone =
+    Object.keys(groupPicks).length === 12 &&
     Object.values(groupPicks).every((gp) => gp.first && gp.second && gp.third);
 
   if (!allGroupsDone) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-white/30">
-        <span className="text-5xl mb-4">🔒</span>
-        <p className="text-lg font-semibold">Complete all 12 groups first</p>
-        <p className="text-sm mt-1">Head to the Group Stage tab to fill out your picks.</p>
+      <div className="flex flex-col items-center justify-center py-32 text-center">
+        <p className="font-serif text-3xl italic font-light text-warm-300 mb-2">Not yet</p>
+        <p className="text-xs tracking-widest uppercase text-warm-300">
+          Complete all 12 groups first
+        </p>
       </div>
     );
   }
@@ -157,7 +146,13 @@ export function KnockoutBracket({
 
   return (
     <div>
-      {/* Wildcard picker */}
+      <div className="mb-10 border-b border-warm-100 pb-6">
+        <h2 className="font-serif text-3xl italic font-light text-warm-900 mb-1">Knockout Bracket</h2>
+        <p className="text-xs tracking-widest uppercase text-warm-400">
+          Click a team to advance them to the next round
+        </p>
+      </div>
+
       <WildcardPicker
         groupPicks={groupPicks}
         wildcardPicks={wildcardPicks}
@@ -165,68 +160,42 @@ export function KnockoutBracket({
       />
 
       {wildcardPicks.length < 8 && (
-        <div className="mb-6 text-center text-white/30 text-sm">
-          Select 8 wildcard teams above to unlock the bracket.
-        </div>
+        <p className="mb-10 text-center text-xs tracking-widest uppercase text-warm-300">
+          Select 8 wildcards to unlock the bracket
+        </p>
       )}
 
       {/* Champion banner */}
       {champion && (
-        <div className="mb-6 flex items-center justify-center gap-3 bg-gold-500/10 border border-gold-500/40 rounded-xl py-4 px-6">
-          <span className="text-3xl">🏆</span>
+        <div className="mb-10 border border-warm-900 px-8 py-6 flex items-center gap-6">
           <div>
-            <p className="text-xs text-gold-400/70 font-semibold uppercase tracking-widest">Your Champion</p>
-            <p className="text-xl font-extrabold text-gold-400">
+            <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">Champion</p>
+            <p className="font-serif text-3xl italic font-light text-warm-900">
               {TEAM_FLAGS[champion] ?? ''} {champion}
             </p>
           </div>
         </div>
       )}
 
-      {/* Bracket — horizontally scrollable */}
+      {/* Bracket */}
       <div className="overflow-x-auto pb-4">
-        <div className="flex gap-4 min-w-max">
-          <RoundColumn
-            label={ROUND_LABELS.r32}
-            matches={R32_MATCHES}
-            round="r32"
-            groupPicks={groupPicks}
-            wildcardPicks={wildcardPicks}
-            knockoutPicks={knockoutPicks}
-            onPick={(mi, w) => onKnockoutPick('r32', mi, w)}
-          />
-          <RoundColumn
-            label={ROUND_LABELS.r16}
-            matches={R16_MATCHES}
-            round="r16"
-            groupPicks={groupPicks}
-            wildcardPicks={wildcardPicks}
-            knockoutPicks={knockoutPicks}
-            onPick={(mi, w) => onKnockoutPick('r16', mi, w)}
-          />
-          <RoundColumn
-            label={ROUND_LABELS.qf}
-            matches={QF_MATCHES}
-            round="qf"
-            groupPicks={groupPicks}
-            wildcardPicks={wildcardPicks}
-            knockoutPicks={knockoutPicks}
-            onPick={(mi, w) => onKnockoutPick('qf', mi, w)}
-          />
-          <RoundColumn
-            label={ROUND_LABELS.sf}
-            matches={SF_MATCHES}
-            round="sf"
-            groupPicks={groupPicks}
-            wildcardPicks={wildcardPicks}
-            knockoutPicks={knockoutPicks}
-            onPick={(mi, w) => onKnockoutPick('sf', mi, w)}
-          />
-          {/* Final */}
-          <div className="flex flex-col min-w-[160px]">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-3 text-center">
+        <div className="flex gap-3 min-w-max">
+          <RoundColumn label={ROUND_LABELS.r32} matches={R32_MATCHES} round="r32"
+            groupPicks={groupPicks} wildcardPicks={wildcardPicks} knockoutPicks={knockoutPicks}
+            onPick={(mi, w) => onKnockoutPick('r32', mi, w)} />
+          <RoundColumn label={ROUND_LABELS.r16} matches={R16_MATCHES} round="r16"
+            groupPicks={groupPicks} wildcardPicks={wildcardPicks} knockoutPicks={knockoutPicks}
+            onPick={(mi, w) => onKnockoutPick('r16', mi, w)} />
+          <RoundColumn label={ROUND_LABELS.qf} matches={QF_MATCHES} round="qf"
+            groupPicks={groupPicks} wildcardPicks={wildcardPicks} knockoutPicks={knockoutPicks}
+            onPick={(mi, w) => onKnockoutPick('qf', mi, w)} />
+          <RoundColumn label={ROUND_LABELS.sf} matches={SF_MATCHES} round="sf"
+            groupPicks={groupPicks} wildcardPicks={wildcardPicks} knockoutPicks={knockoutPicks}
+            onPick={(mi, w) => onKnockoutPick('sf', mi, w)} />
+          <div className="flex flex-col min-w-[156px]">
+            <p className="text-xs tracking-widest uppercase text-warm-400 mb-4 text-center">
               {ROUND_LABELS.final}
-            </h4>
+            </p>
             <MatchCard
               match={FINAL_MATCH}
               round="final"

@@ -8,7 +8,6 @@ interface Props {
 }
 
 export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
-  // Collect all third-place teams from group picks
   const thirdPlaceTeams = Object.values(groupPicks)
     .map((gp) => gp.third)
     .filter((t): t is string => t !== null);
@@ -25,21 +24,28 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
   const isComplete = wildcardPicks.length === 8;
 
   return (
-    <div className="bg-pitch-800 rounded-xl border border-blue-400/30 p-5 mb-6">
-      <div className="flex items-center justify-between mb-1">
-        <h3 className="font-bold text-white flex items-center gap-2">
-          <span className="text-blue-400">🃏</span> Wildcard Selection
-        </h3>
-        <span className={`text-sm font-bold ${isComplete ? 'text-green-400' : 'text-blue-300'}`}>
-          {wildcardPicks.length} / 8 selected
-        </span>
+    <div className="mb-12 border border-warm-200 p-8">
+      <div className="flex items-end justify-between mb-6">
+        <div>
+          <h3 className="font-serif text-2xl italic font-light text-warm-900 mb-1">
+            Wildcard Selection
+          </h3>
+          <p className="text-xs tracking-widest uppercase text-warm-400">
+            Choose 8 of the 12 third-place teams to advance
+          </p>
+        </div>
+        <p className={`font-serif text-2xl font-light ${isComplete ? 'text-warm-900' : 'text-warm-300'}`}>
+          {wildcardPicks.length}<span className="text-warm-300">/8</span>
+        </p>
       </div>
-      <p className="text-xs text-white/40 mb-4">
-        Choose 8 of the 12 third-place finishers to advance to the Round of 32.
-        {!isComplete && needed > 0 && ` Pick ${needed} more.`}
-      </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+      {!isComplete && needed > 0 && (
+        <p className="text-xs text-warm-400 tracking-wider mb-4">
+          {needed} more selection{needed !== 1 ? 's' : ''} needed
+        </p>
+      )}
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-px bg-warm-100">
         {thirdPlaceTeams.map((team) => {
           const selected = wildcardPicks.includes(team);
           const disabled = !selected && wildcardPicks.length >= 8;
@@ -49,17 +55,17 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
               onClick={() => !disabled && toggle(team)}
               disabled={disabled}
               className={[
-                'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 border',
+                'flex items-center gap-2 px-4 py-3 text-xs transition-all duration-150 bg-cream-100',
                 selected
-                  ? 'border-blue-400 bg-blue-400/20 text-blue-300 shadow-sm shadow-blue-400/20'
+                  ? 'bg-warm-900 text-cream-100'
                   : disabled
-                  ? 'border-white/5 bg-white/5 text-white/20 cursor-not-allowed'
-                  : 'border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/30 cursor-pointer',
+                  ? 'text-warm-200 cursor-not-allowed'
+                  : 'text-warm-600 hover:bg-cream-200 cursor-pointer',
               ].join(' ')}
             >
               <span>{TEAM_FLAGS[team] ?? '🏳'}</span>
               <span className="truncate">{team}</span>
-              {selected && <span className="ml-auto text-xs">✓</span>}
+              {selected && <span className="ml-auto text-warm-300 text-xs">✓</span>}
             </button>
           );
         })}

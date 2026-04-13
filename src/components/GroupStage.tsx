@@ -15,41 +15,48 @@ export function GroupStage({ groupPicks, onPick }: Props) {
 
   return (
     <div>
-      {/* Progress bar */}
-      <div className="mb-6 bg-pitch-800 rounded-xl border border-white/10 p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-white/70">Group Stage Progress</span>
-          <span className="text-sm font-bold text-gold-400">
-            {completed} / {GROUPS.length} groups
-          </span>
+      {/* Progress */}
+      <div className="mb-10 flex items-end justify-between border-b border-warm-100 pb-6">
+        <div>
+          <h2 className="font-serif text-3xl italic font-light text-warm-900 mb-1">
+            Group Stage
+          </h2>
+          <p className="text-xs tracking-widest uppercase text-warm-400">
+            Pick 1st, 2nd &amp; 3rd place for each group
+          </p>
         </div>
-        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gold-500 rounded-full transition-all duration-500"
-            style={{ width: `${(completed / GROUPS.length) * 100}%` }}
-          />
+        <div className="text-right">
+          <p className="font-serif text-3xl font-light text-warm-900">
+            {completed}<span className="text-warm-300">/{GROUPS.length}</span>
+          </p>
+          <p className="text-xs tracking-widest uppercase text-warm-400">Groups done</p>
         </div>
-        <p className="text-xs text-white/40 mt-2">
-          Pick 1st, 2nd, and 3rd place for each group.
-          The best 8 third-place teams advance as wildcards.
-        </p>
       </div>
 
-      {/* Group grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* Progress bar */}
+      <div className="h-px bg-warm-100 mb-10 relative">
+        <div
+          className="absolute top-0 left-0 h-px bg-warm-900 transition-all duration-700"
+          style={{ width: `${(completed / GROUPS.length) * 100}%` }}
+        />
+      </div>
+
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-warm-100">
         {GROUPS.map((group) => (
-          <GroupCard
-            key={group.id}
-            group={group}
-            pick={groupPicks[group.id] ?? { first: null, second: null, third: null }}
-            onPick={(pos, team) => onPick(group.id, pos, team)}
-          />
+          <div key={group.id} className="bg-cream-100">
+            <GroupCard
+              group={group}
+              pick={groupPicks[group.id] ?? { first: null, second: null, third: null }}
+              onPick={(pos, team) => onPick(group.id, pos, team)}
+            />
+          </div>
         ))}
       </div>
 
       {completed < GROUPS.length && (
-        <p className="mt-6 text-center text-white/30 text-sm">
-          Complete all groups to unlock the Knockout Bracket.
+        <p className="mt-10 text-center text-xs tracking-widest uppercase text-warm-300">
+          Complete all groups to unlock the bracket
         </p>
       )}
     </div>
