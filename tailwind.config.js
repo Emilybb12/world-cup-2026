@@ -30,6 +30,12 @@ export default {
           400: '#c8a96e',
           500: '#b8995e',
         },
+        pitch: {
+          400: '#5a8f52',
+          500: '#3d7a34',
+          600: '#2d6425',
+          700: '#1e4d18',
+        },
       },
       fontFamily: {
         serif: ['DM Serif Display', 'Georgia', 'serif'],

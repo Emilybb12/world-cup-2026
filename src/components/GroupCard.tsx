@@ -64,7 +64,7 @@ export function GroupCard({ group, pick, onPick }: Props) {
                       className={[
                         'text-left px-3 py-2 text-xs flex items-center gap-2 transition-all duration-150 border',
                         isSelected
-                          ? 'border-warm-900 bg-warm-900 text-cream-100'
+                          ? 'border-pitch-600 bg-pitch-600 text-cream-100'
                           : isUsedElsewhere
                           ? 'border-transparent text-warm-200 cursor-not-allowed'
                           : 'border-transparent hover:border-warm-200 text-warm-600 hover:text-warm-900 cursor-pointer',

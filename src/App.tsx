@@ -42,8 +42,9 @@ export function App() {
               <p className="text-xs tracking-widest2 uppercase text-warm-400 font-normal mb-0.5">
                 2026 FIFA World Cup
               </p>
-              <h1 className="font-serif text-2xl font-light text-warm-900 leading-none">
-                BBSK Family Predictions
+              <h1 className="font-serif text-2xl font-light text-warm-900 leading-none flex items-center gap-2">
+                <span>BBSK Family Predictions</span>
+                <span className="text-lg">⚽</span>
               </h1>
             </div>
             <PlayerSelector current={player} onChange={setPlayer} />
@@ -58,7 +59,7 @@ export function App() {
                 className={[
                   'pb-4 text-xs tracking-widest uppercase font-normal border-b transition-all duration-200',
                   tab === t.id
-                    ? 'border-warm-900 text-warm-900'
+                    ? 'border-pitch-500 text-warm-900'
                     : 'border-transparent text-warm-400 hover:text-warm-600',
                 ].join(' ')}
               >

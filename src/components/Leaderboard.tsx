@@ -66,7 +66,7 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
       <div className="px-6 pt-4 pb-1">
         <div className="h-px bg-warm-100 relative">
           <div
-            className="absolute top-0 left-0 h-px bg-warm-900 transition-all duration-700"
+            className="absolute top-0 left-0 h-px bg-pitch-500 transition-all duration-700"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -100,9 +100,9 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
 
       {/* Champion */}
       <div className="px-6 py-5">
-        <p className="text-xs tracking-widest uppercase text-warm-400 mb-2">Champion</p>
+        <p className="text-xs tracking-widest uppercase text-warm-400 mb-2">🏆 Champion</p>
         {champion ? (
-          <p className="font-serif text-xl font-light text-warm-900">
+          <p className="font-serif text-xl font-light text-pitch-600">
             {TEAM_FLAGS[champion] ?? ''} {champion}
           </p>
         ) : (

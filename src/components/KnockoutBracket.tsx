@@ -169,8 +169,8 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
       {champion && (
         <div className="mb-10 border border-warm-900 px-8 py-6 flex items-center gap-6">
           <div>
-            <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">Champion</p>
-            <p className="font-serif text-3xl font-light text-warm-900">
+            <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">🏆 Champion</p>
+            <p className="font-serif text-3xl font-light text-pitch-600">
               {TEAM_FLAGS[champion] ?? ''} {champion}
             </p>
           </div>

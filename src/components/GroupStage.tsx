@@ -36,7 +36,7 @@ export function GroupStage({ groupPicks, onPick }: Props) {
       {/* Progress bar */}
       <div className="h-px bg-warm-100 mb-10 relative">
         <div
-          className="absolute top-0 left-0 h-px bg-warm-900 transition-all duration-700"
+          className="absolute top-0 left-0 h-px bg-pitch-500 transition-all duration-700"
           style={{ width: `${(completed / GROUPS.length) * 100}%` }}
         />
       </div>
