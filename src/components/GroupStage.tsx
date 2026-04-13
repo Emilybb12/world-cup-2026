@@ -23,8 +23,8 @@ export function GroupStage({ groupPicks, onPick }: Props) {
           <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
             Group Stage
           </h2>
-          <p className="text-sm text-white/40 font-300 tracking-wider">
-            Pick 1st, 2nd &amp; 3rd place for each group
+          <p className="text-sm text-white/40 tracking-wider">
+            Click a group to pick 1st, 2nd &amp; wildcard
           </p>
         </div>
         <div className="text-right">
@@ -43,8 +43,8 @@ export function GroupStage({ groupPicks, onPick }: Props) {
         />
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      {/* Accordion list */}
+      <div className="flex flex-col gap-2">
         {GROUPS.map((group) => (
           <GroupCard
             key={group.id}
