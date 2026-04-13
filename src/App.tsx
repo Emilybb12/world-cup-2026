@@ -66,7 +66,7 @@ export function App() {
                   2026 FIFA World Cup
                 </p>
                 <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase">
-                  BBSK Family Predictions
+                  Ro & Em Predictions
                 </h1>
               </div>
             </div>
