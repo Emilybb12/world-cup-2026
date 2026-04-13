@@ -27,6 +27,7 @@ export function usePicks() {
   const [picks, setPicks] = useState<AllPicks>(
     Object.fromEntries(ALL_PLAYERS.map((p) => [p, makeDefault(p)])) as AllPicks
   );
+  const [pins, setPins] = useState<Partial<Record<Player, string>>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +48,7 @@ export function usePicks() {
         const next: AllPicks = Object.fromEntries(
           ALL_PLAYERS.map((p) => [p, makeDefault(p)])
         ) as AllPicks;
+        const newPins: Partial<Record<Player, string>> = {};
         for (const row of data ?? []) {
           const p = row.player as Player;
           next[p] = {
@@ -59,8 +61,10 @@ export function usePicks() {
             },
             updated_at: row.updated_at,
           };
+          if (row.pin) newPins[p] = row.pin as string;
         }
         setPicks(next);
+        setPins(newPins);
       }
       setLoading(false);
     }
@@ -98,6 +102,15 @@ export function usePicks() {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, []);
+
+  const savePin = useCallback(async (player: Player, pin: string) => {
+    const { error } = await supabase
+      .from('player_picks')
+      .update({ pin })
+      .eq('player', player);
+    if (error) setError(error.message);
+    else setPins((prev) => ({ ...prev, [player]: pin }));
   }, []);
 
   const savePlayer = useCallback(async (updated: PlayerPicks) => {
@@ -211,7 +224,7 @@ export function usePicks() {
     [debouncedSave]
   );
 
-  return { picks, loading, error, updateGroupPick, updateWildcardPicks, updateKnockoutPick };
+  return { picks, pins, loading, error, savePin, updateGroupPick, updateWildcardPicks, updateKnockoutPick };
 }
 
 /**
