@@ -43,7 +43,7 @@ export function App() {
                 2026 FIFA World Cup
               </p>
               <h1 className="font-serif text-2xl font-light text-warm-900 leading-none">
-                Em & Ro's Predictions
+                BBSK Family Predictions
               </h1>
             </div>
             <PlayerSelector current={player} onChange={setPlayer} />
