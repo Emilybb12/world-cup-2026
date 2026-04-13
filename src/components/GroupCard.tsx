@@ -8,10 +8,10 @@ interface Props {
   onPick: (position: 'first' | 'second' | 'third', team: string | null) => void;
 }
 
-const POSITIONS: Array<{ key: 'first' | 'second' | 'third'; label: string; short: string }> = [
-  { key: 'first',  label: '1st Place',      short: '1ST' },
-  { key: 'second', label: '2nd Place',      short: '2ND' },
-  { key: 'third',  label: '3rd — Wildcard', short: 'WC'  },
+const POSITIONS: Array<{ key: 'first' | 'second' | 'third'; short: string }> = [
+  { key: 'first',  short: '1ST' },
+  { key: 'second', short: '2ND' },
+  { key: 'third',  short: 'WC'  },
 ];
 
 export function GroupCard({ group, pick, onPick }: Props) {
@@ -20,76 +20,74 @@ export function GroupCard({ group, pick, onPick }: Props) {
 
   return (
     <div className={[
-      'border transition-all duration-300',
-      isComplete ? 'border-gold-500/60' : open ? 'border-navy-500' : 'border-navy-600',
-      'bg-navy-800',
+      'border transition-all duration-200',
+      isComplete ? 'border-ink-900' : open ? 'border-ink-400' : 'border-ink-100',
+      'bg-white',
     ].join(' ')}>
 
-      {/* Header — always visible, click to toggle */}
+      {/* Row — click to toggle */}
       <button
-        className="w-full flex items-center justify-between px-5 py-4 hover:bg-navy-700/50 transition-colors"
+        className="w-full flex items-center gap-4 px-5 py-4 hover:bg-off-50 transition-colors text-left"
         onClick={() => setOpen((o) => !o)}
       >
-        <div className="flex items-center gap-4">
-          <span className="font-display font-800 text-2xl tracking-wider text-white uppercase w-8">
-            {group.id}
-          </span>
+        {/* Group letter */}
+        <span className="font-display font-800 text-3xl tracking-wider text-ink-900 w-6 shrink-0">
+          {group.id}
+        </span>
+
+        {/* Summary or team names */}
+        <div className="flex-1 min-w-0">
           {isComplete ? (
-            /* Completed summary */
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4 flex-wrap">
               {[pick.first, pick.second, pick.third].map((team, i) => (
                 <div key={i} className="flex items-center gap-1.5">
-                  <span className="text-xs font-display tracking-widest text-white/30">
+                  <span className="text-xs font-display tracking-widest text-ink-300">
                     {['1ST', '2ND', 'WC'][i]}
                   </span>
                   <span className="text-sm">{TEAM_FLAGS[team!] ?? '🏳'}</span>
-                  <span className="text-xs text-white/70 hidden sm:block">{team}</span>
+                  <span className="text-xs text-ink-600 hidden sm:block font-400">{team}</span>
                 </div>
               ))}
             </div>
           ) : (
-            /* Team pills */
-            <div className="flex gap-1.5 flex-wrap">
+            <div className="flex gap-2 flex-wrap">
               {group.teams.map((team) => (
-                <span key={team} className="text-xs text-white/30 font-display tracking-wide">
+                <span key={team} className="text-xs text-ink-300 font-400">
                   {TEAM_FLAGS[team]} {team}
                 </span>
               ))}
             </div>
           )}
         </div>
-        <div className="flex items-center gap-3 ml-4 shrink-0">
+
+        {/* Status */}
+        <div className="flex items-center gap-2 shrink-0">
           {isComplete && (
-            <span className="text-xs font-display tracking-widest uppercase text-gold-400">✓</span>
+            <span className="font-display text-xs tracking-widest text-ink-900">✓</span>
           )}
-          <span className={`text-white/30 text-xs transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
-            ▼
-          </span>
+          <span className={`text-ink-300 text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>▼</span>
         </div>
       </button>
 
-      {/* Expanded picker */}
+      {/* Expanded */}
       {open && (
-        <div className="border-t border-navy-700 px-5 pb-5 pt-4">
-          {/* Team grid with position buttons */}
-          <div className="grid grid-cols-1 gap-2">
+        <div className="border-t border-ink-100 px-5 py-4">
+          <div className="flex flex-col gap-2">
             {group.teams.map((team) => {
               const assignedPos = pick.first === team ? 'first' : pick.second === team ? 'second' : pick.third === team ? 'third' : null;
               return (
                 <div key={team} className="flex items-center gap-3">
-                  {/* Team name */}
                   <div className="flex items-center gap-2 w-44 shrink-0">
                     <span className="text-lg">{TEAM_FLAGS[team] ?? '🏳'}</span>
-                    <span className="text-sm text-white/70 font-300 truncate">{team}</span>
+                    <span className="text-sm text-ink-600 font-400 truncate">{team}</span>
                   </div>
-                  {/* Position buttons */}
                   <div className="flex gap-1.5">
                     {POSITIONS.map(({ key, short }) => {
                       const isSelected = assignedPos === key;
                       const isTakenByOther = !isSelected && (
-                        (key === 'first' && pick.first !== null) ||
+                        (key === 'first'  && pick.first  !== null) ||
                         (key === 'second' && pick.second !== null) ||
-                        (key === 'third' && pick.third !== null)
+                        (key === 'third'  && pick.third  !== null)
                       );
                       return (
                         <button
@@ -98,10 +96,10 @@ export function GroupCard({ group, pick, onPick }: Props) {
                           className={[
                             'px-3 py-1.5 text-xs font-display font-600 tracking-widest border transition-all duration-150',
                             isSelected
-                              ? 'border-gold-400 bg-gold-400/20 text-gold-300'
+                              ? 'border-ink-900 bg-ink-900 text-white'
                               : isTakenByOther
-                              ? 'border-navy-700 text-white/15 cursor-not-allowed'
-                              : 'border-navy-600 text-white/40 hover:border-navy-400 hover:text-white cursor-pointer',
+                              ? 'border-ink-100 text-ink-200 cursor-not-allowed'
+                              : 'border-ink-200 text-ink-400 hover:border-ink-900 hover:text-ink-900 cursor-pointer',
                           ].join(' ')}
                         >
                           {short}
@@ -109,11 +107,6 @@ export function GroupCard({ group, pick, onPick }: Props) {
                       );
                     })}
                   </div>
-                  {assignedPos && (
-                    <span className="text-xs font-display text-gold-400 tracking-widest">
-                      {POSITIONS.find(p => p.key === assignedPos)?.short}
-                    </span>
-                  )}
                 </div>
               );
             })}
@@ -122,7 +115,7 @@ export function GroupCard({ group, pick, onPick }: Props) {
           {isComplete && (
             <button
               onClick={() => setOpen(false)}
-              className="mt-4 w-full py-2 border border-gold-500 text-gold-400 text-xs font-display font-600 tracking-widest uppercase hover:bg-gold-400/10 transition-colors"
+              className="mt-4 w-full py-2 border border-ink-900 text-ink-900 text-xs font-display font-700 tracking-widest uppercase hover:bg-ink-900 hover:text-white transition-all"
             >
               Done ✓
             </button>
