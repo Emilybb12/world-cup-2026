@@ -19,7 +19,7 @@ function makeDefault(player: Player): PlayerPicks {
   };
 }
 
-export const ALL_PLAYERS: Player[] = ['em', 'allie', 'brian', 'kathleen', 'jaivon', 'zay'];
+export const ALL_PLAYERS: Player[] = ['em', 'ro'];
 
 type AllPicks = Record<Player, PlayerPicks>;
 

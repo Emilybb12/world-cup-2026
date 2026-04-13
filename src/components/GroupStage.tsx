@@ -13,49 +13,50 @@ export function GroupStage({ groupPicks, onPick }: Props) {
     return p?.first && p?.second && p?.third;
   }).length;
 
+  const pct = Math.round((completed / GROUPS.length) * 100);
+
   return (
     <div>
-      {/* Progress */}
-      <div className="mb-10 flex items-end justify-between border-b border-warm-100 pb-6">
+      {/* Header */}
+      <div className="mb-8 flex items-end justify-between">
         <div>
-          <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">
+          <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
             Group Stage
           </h2>
-          <p className="text-xs tracking-widest uppercase text-warm-400">
+          <p className="text-sm text-white/40 font-300 tracking-wider">
             Pick 1st, 2nd &amp; 3rd place for each group
           </p>
         </div>
         <div className="text-right">
-          <p className="font-serif text-3xl font-light text-warm-900">
-            {completed}<span className="text-warm-300">/{GROUPS.length}</span>
+          <p className="font-display font-700 text-4xl text-gold-400">
+            {pct}<span className="text-white/20 text-2xl">%</span>
           </p>
-          <p className="text-xs tracking-widest uppercase text-warm-400">Groups done</p>
+          <p className="text-xs text-white/40 tracking-widest uppercase">{completed}/{GROUPS.length} Groups</p>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-px bg-warm-100 mb-10 relative">
+      <div className="h-0.5 bg-navy-700 mb-8 relative">
         <div
-          className="absolute top-0 left-0 h-px bg-pitch-500 transition-all duration-700"
-          style={{ width: `${(completed / GROUPS.length) * 100}%` }}
+          className="absolute top-0 left-0 h-0.5 bg-gold-400 transition-all duration-700"
+          style={{ width: `${pct}%` }}
         />
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-warm-100">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {GROUPS.map((group) => (
-          <div key={group.id} className="bg-cream-100">
-            <GroupCard
-              group={group}
-              pick={groupPicks[group.id] ?? { first: null, second: null, third: null }}
-              onPick={(pos, team) => onPick(group.id, pos, team)}
-            />
-          </div>
+          <GroupCard
+            key={group.id}
+            group={group}
+            pick={groupPicks[group.id] ?? { first: null, second: null, third: null }}
+            onPick={(pos, team) => onPick(group.id, pos, team)}
+          />
         ))}
       </div>
 
       {completed < GROUPS.length && (
-        <p className="mt-10 text-center text-xs tracking-widest uppercase text-warm-300">
+        <p className="mt-8 text-center text-xs tracking-widest uppercase text-white/20 font-display">
           Complete all groups to unlock the bracket
         </p>
       )}

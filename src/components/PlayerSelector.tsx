@@ -2,12 +2,8 @@ import type { Player } from '../types';
 import { ALL_PLAYERS } from '../hooks/usePicks';
 
 const DISPLAY_NAMES: Record<Player, string> = {
-  em:       'Em',
-  allie:    'Allie',
-  brian:    'Brian',
-  kathleen: 'Kathleen',
-  jaivon:   'Jaivon',
-  zay:      'Zay',
+  em: 'Em',
+  ro: 'Ro',
 };
 
 interface Props {
@@ -17,16 +13,16 @@ interface Props {
 
 export function PlayerSelector({ current, onChange }: Props) {
   return (
-    <div className="flex flex-wrap gap-px border border-warm-200 overflow-hidden">
+    <div className="flex border border-navy-600 overflow-hidden">
       {ALL_PLAYERS.map((p) => (
         <button
           key={p}
           onClick={() => onChange(p)}
           className={[
-            'px-4 py-2 text-xs tracking-widest uppercase font-normal transition-all duration-150 whitespace-nowrap',
+            'px-6 py-2 font-display font-700 text-sm tracking-widest uppercase transition-all duration-150',
             current === p
-              ? 'bg-warm-900 text-cream-100'
-              : 'bg-transparent text-warm-400 hover:text-warm-700',
+              ? 'bg-gold-400 text-navy-900'
+              : 'text-white/40 hover:text-white',
           ].join(' ')}
         >
           {DISPLAY_NAMES[p]}

@@ -7,42 +7,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: {
-          50:  '#fdfcfa',
-          100: '#faf8f5',
-          200: '#f5f1eb',
-          300: '#ede8e0',
-          400: '#e0d9cf',
+        navy: {
+          950: '#020b18',
+          900: '#040f22',
+          800: '#071428',
+          700: '#0c1f3d',
+          600: '#122850',
+          500: '#1a3566',
         },
-        warm: {
-          100: '#e8e4df',
-          200: '#d4cfc8',
-          300: '#b8b2aa',
-          400: '#9a9490',
-          500: '#7a7570',
-          600: '#5a5550',
-          700: '#3a3530',
-          800: '#2a2520',
-          900: '#1a1815',
+        gold: {
+          300: '#f0d878',
+          400: '#e8c84a',
+          500: '#c9a832',
+          600: '#a88820',
         },
-        sand: {
-          300: '#d4b483',
-          400: '#c8a96e',
-          500: '#b8995e',
-        },
-        pitch: {
-          400: '#5a8f52',
-          500: '#3d7a34',
-          600: '#2d6425',
-          700: '#1e4d18',
+        ucl: {
+          blue:   '#4f9cf9',
+          silver: '#b0bec5',
         },
       },
       fontFamily: {
-        serif: ['DM Serif Display', 'Georgia', 'serif'],
-        sans:  ['Inter', 'system-ui', 'sans-serif'],
-      },
-      letterSpacing: {
-        widest2: '0.2em',
+        display: ['Barlow Condensed', 'sans-serif'],
+        sans:    ['Barlow', 'system-ui', 'sans-serif'],
       },
     },
   },

@@ -62,8 +62,8 @@ function MatchCard({ match, round, groupPicks, wildcardPicks, knockoutPicks, onP
 
   return (
     <div className={[
-      'border transition-all duration-200',
-      canPick ? 'border-warm-200' : 'border-warm-100',
+      'border overflow-hidden transition-all duration-200',
+      canPick ? 'border-navy-600 bg-navy-800' : 'border-navy-700 bg-navy-800/50',
     ].join(' ')}>
       {[home, away].map((team, idx) => {
         const isWinner = team !== null && currentWinner === team;
@@ -75,19 +75,19 @@ function MatchCard({ match, round, groupPicks, wildcardPicks, knockoutPicks, onP
             disabled={!canPick || !team}
             className={[
               'w-full flex items-center gap-2 px-3 py-2.5 text-xs transition-all duration-150',
-              idx === 0 ? 'border-b border-warm-100' : '',
+              idx === 0 ? 'border-b border-navy-700' : '',
               isWinner
-                ? 'bg-warm-900 text-cream-100'
+                ? 'bg-gold-400/20 text-gold-300 font-500'
                 : isLoser
-                ? 'text-warm-200'
+                ? 'text-white/20'
                 : team
-                ? 'text-warm-600 hover:text-warm-900 hover:bg-cream-200 cursor-pointer'
-                : 'text-warm-200 cursor-default',
+                ? 'text-white/60 hover:text-white hover:bg-navy-700 cursor-pointer'
+                : 'text-white/20 cursor-default',
             ].join(' ')}
           >
             <span>{team ? (TEAM_FLAGS[team] ?? '🏳') : ''}</span>
             <span className="truncate">{team ?? '—'}</span>
-            {isWinner && <span className="ml-auto text-warm-400 text-xs">✓</span>}
+            {isWinner && <span className="ml-auto text-gold-400 text-xs">★</span>}
           </button>
         );
       })}
@@ -108,7 +108,9 @@ interface RoundColumnProps {
 function RoundColumn({ label, matches, round, groupPicks, wildcardPicks, knockoutPicks, onPick }: RoundColumnProps) {
   return (
     <div className="flex flex-col min-w-[156px]">
-      <p className="text-xs tracking-widest uppercase text-warm-400 mb-4 text-center">{label}</p>
+      <p className="text-xs font-display font-600 tracking-widest uppercase text-gold-400/70 mb-3 text-center">
+        {label}
+      </p>
       <div className="flex flex-col gap-1.5">
         {matches.map((match) => (
           <MatchCard
@@ -134,8 +136,10 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
   if (!allGroupsDone) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
-        <p className="font-serif text-3xl font-light text-warm-300 mb-2">Not yet</p>
-        <p className="text-xs tracking-widest uppercase text-warm-300">
+        <p className="font-display font-800 text-4xl tracking-widest text-white/20 uppercase mb-2">
+          Locked
+        </p>
+        <p className="text-xs tracking-widest uppercase text-white/20">
           Complete all 12 groups first
         </p>
       </div>
@@ -146,9 +150,11 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
 
   return (
     <div>
-      <div className="mb-10 border-b border-warm-100 pb-6">
-        <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">Knockout Bracket</h2>
-        <p className="text-xs tracking-widest uppercase text-warm-400">
+      <div className="mb-8">
+        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
+          Knockout Bracket
+        </h2>
+        <p className="text-sm text-white/40 tracking-wider">
           Click a team to advance them to the next round
         </p>
       </div>
@@ -160,17 +166,18 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
       />
 
       {wildcardPicks.length < 8 && (
-        <p className="mb-10 text-center text-xs tracking-widest uppercase text-warm-300">
+        <p className="mb-8 text-center text-xs tracking-widest uppercase text-white/20 font-display">
           Select 8 wildcards to unlock the bracket
         </p>
       )}
 
       {/* Champion banner */}
       {champion && (
-        <div className="mb-10 border border-warm-900 px-8 py-6 flex items-center gap-6">
+        <div className="mb-8 border border-gold-500 bg-gold-400/10 px-8 py-5 flex items-center gap-4">
+          <span className="text-3xl">🏆</span>
           <div>
-            <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">🏆 Champion</p>
-            <p className="font-serif text-3xl font-light text-pitch-600">
+            <p className="text-xs font-display tracking-widest uppercase text-gold-400/70 mb-0.5">Champion</p>
+            <p className="font-display font-800 text-2xl tracking-wide text-gold-400 uppercase">
               {TEAM_FLAGS[champion] ?? ''} {champion}
             </p>
           </div>
@@ -193,7 +200,7 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
             groupPicks={groupPicks} wildcardPicks={wildcardPicks} knockoutPicks={knockoutPicks}
             onPick={(mi, w) => onKnockoutPick('sf', mi, w)} />
           <div className="flex flex-col min-w-[156px]">
-            <p className="text-xs tracking-widest uppercase text-warm-400 mb-4 text-center">
+            <p className="text-xs font-display font-600 tracking-widest uppercase text-gold-400/70 mb-3 text-center">
               {ROUND_LABELS.final}
             </p>
             <MatchCard

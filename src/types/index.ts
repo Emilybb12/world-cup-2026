@@ -1,4 +1,4 @@
-export type Player = 'em' | 'allie' | 'brian' | 'kathleen' | 'jaivon' | 'zay';
+export type Player = 'em' | 'ro';
 export type RoundKey = 'r32' | 'r16' | 'qf' | 'sf' | 'final';
 
 export interface Group {

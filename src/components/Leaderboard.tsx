@@ -3,12 +3,8 @@ import { GROUPS, TEAM_FLAGS } from '../data/tournament';
 import { ALL_PLAYERS } from '../hooks/usePicks';
 
 const DISPLAY_NAMES: Record<Player, string> = {
-  em:       'Em',
-  allie:    'Allie',
-  brian:    'Brian',
-  kathleen: 'Kathleen',
-  jaivon:   'Jaivon',
-  zay:      'Zay',
+  em: 'Em',
+  ro: 'Ro',
 };
 
 interface Props {
@@ -53,60 +49,60 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
   const sfDone  = Object.values(kp.sf).filter(Boolean).length;
 
   return (
-    <div className="border border-warm-200 min-w-[220px] flex-1">
+    <div className="border border-navy-600 bg-navy-800 flex-1 min-w-[220px]">
       {/* Name */}
-      <div className="px-6 py-5 border-b border-warm-100 flex items-end justify-between">
-        <h3 className="font-serif text-3xl font-light text-warm-900">{name}</h3>
-        <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">
-          {pct === 100 ? 'Complete' : `${pct}%`}
+      <div className="px-6 py-5 border-b border-navy-600 flex items-center justify-between">
+        <h3 className="font-display font-800 text-3xl tracking-wide text-white uppercase">{name}</h3>
+        <p className={`font-display font-700 text-2xl ${pct === 100 ? 'text-gold-400' : 'text-white/30'}`}>
+          {pct}<span className="text-sm">%</span>
         </p>
       </div>
 
       {/* Progress bar */}
-      <div className="px-6 pt-4 pb-1">
-        <div className="h-px bg-warm-100 relative">
+      <div className="px-6 pt-4 pb-2">
+        <div className="h-0.5 bg-navy-700 relative">
           <div
-            className="absolute top-0 left-0 h-px bg-pitch-500 transition-all duration-700"
+            className="absolute top-0 left-0 h-0.5 bg-gold-400 transition-all duration-700"
             style={{ width: `${pct}%` }}
           />
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 divide-x divide-warm-100 border-b border-warm-100">
+      <div className="grid grid-cols-3 divide-x divide-navy-700 border-b border-navy-700">
         {[
           { label: 'Groups',    value: `${groupsDone}/12` },
-          { label: 'Wildcards', value: `${picks.wildcard_picks.length}/8` },
+          { label: 'WC',        value: `${picks.wildcard_picks.length}/8` },
           { label: 'R32',       value: `${r32Done}/16` },
         ].map(({ label, value }) => (
           <div key={label} className="px-3 py-3 text-center">
-            <p className="font-serif text-lg font-light text-warm-900">{value}</p>
-            <p className="text-xs tracking-widest uppercase text-warm-400 mt-0.5">{label}</p>
+            <p className="font-display font-700 text-lg text-white">{value}</p>
+            <p className="text-xs tracking-widest uppercase text-white/30 mt-0.5">{label}</p>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-3 divide-x divide-warm-100 border-b border-warm-100">
+      <div className="grid grid-cols-3 divide-x divide-navy-700 border-b border-navy-700">
         {[
           { label: 'R16', value: `${r16Done}/8` },
           { label: 'QF',  value: `${qfDone}/4`  },
           { label: 'SF',  value: `${sfDone}/2`  },
         ].map(({ label, value }) => (
           <div key={label} className="px-3 py-3 text-center">
-            <p className="font-serif text-lg font-light text-warm-900">{value}</p>
-            <p className="text-xs tracking-widest uppercase text-warm-400 mt-0.5">{label}</p>
+            <p className="font-display font-700 text-lg text-white">{value}</p>
+            <p className="text-xs tracking-widest uppercase text-white/30 mt-0.5">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Champion */}
       <div className="px-6 py-5">
-        <p className="text-xs tracking-widest uppercase text-warm-400 mb-2">🏆 Champion</p>
+        <p className="text-xs font-display tracking-widest uppercase text-white/30 mb-2">🏆 Champion</p>
         {champion ? (
-          <p className="font-serif text-xl font-light text-pitch-600">
+          <p className="font-display font-700 text-xl tracking-wide text-gold-400 uppercase">
             {TEAM_FLAGS[champion] ?? ''} {champion}
           </p>
         ) : (
-          <p className="font-serif text-lg text-warm-300">Not yet picked</p>
+          <p className="font-display text-lg text-white/20 uppercase">Not yet picked</p>
         )}
       </div>
     </div>
@@ -114,30 +110,29 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
 }
 
 export function Leaderboard({ allPicks }: Props) {
-  // Find if everyone picked the same champion
   const champions = ALL_PLAYERS.map((p) => allPicks[p].knockout_picks.final).filter(Boolean);
   const uniqueChampions = [...new Set(champions)];
   const allAgree = uniqueChampions.length === 1 && champions.length === ALL_PLAYERS.length;
 
   return (
     <div>
-      <div className="mb-10 border-b border-warm-100 pb-6">
-        <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">Leaderboard</h2>
-        <p className="text-xs tracking-widest uppercase text-warm-400">
-          Completion &amp; champion picks
-        </p>
+      <div className="mb-8">
+        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
+          Leaderboard
+        </h2>
+        <p className="text-sm text-white/40 tracking-wider">Completion &amp; champion picks</p>
       </div>
 
       {allAgree && (
-        <div className="mb-8 border border-warm-900 px-8 py-5">
-          <p className="font-serif text-xl font-light text-warm-900 text-center">
-            Everyone picked {TEAM_FLAGS[uniqueChampions[0]!] ?? ''} {uniqueChampions[0]} to win it all
+        <div className="mb-8 border border-gold-500 bg-gold-400/10 px-8 py-4 flex items-center gap-3">
+          <span className="text-2xl">🤝</span>
+          <p className="font-display font-700 text-lg tracking-wide text-gold-400 uppercase">
+            Everyone picked {TEAM_FLAGS[uniqueChampions[0]!] ?? ''} {uniqueChampions[0]} to win it all!
           </p>
         </div>
       )}
 
-      {/* Player cards */}
-      <div className="flex flex-wrap gap-px bg-warm-100 mb-12">
+      <div className="flex flex-wrap gap-3 mb-12">
         {ALL_PLAYERS.map((p) => (
           <PlayerCard key={p} name={DISPLAY_NAMES[p]} picks={allPicks[p]} />
         ))}
@@ -145,42 +140,41 @@ export function Leaderboard({ allPicks }: Props) {
 
       {/* Comparison table */}
       <div>
-        <p className="text-xs tracking-widest uppercase text-warm-400 mb-6">Group Picks — All Players</p>
-        <div className="overflow-x-auto">
+        <p className="text-xs font-display font-600 tracking-widest uppercase text-gold-400/70 mb-4">
+          Group Picks — Side by Side
+        </p>
+        <div className="overflow-x-auto border border-navy-600">
           <table className="w-full text-xs border-collapse">
             <thead>
-              <tr className="border-b border-warm-200">
-                <th className="text-left py-3 px-4 text-xs tracking-widest uppercase text-warm-400 font-normal sticky left-0 bg-cream-100">Group</th>
-                {ALL_PLAYERS.map((p) => (
-                  <th key={p} colSpan={3} className="py-3 px-4 text-xs tracking-widest uppercase text-warm-400 font-normal text-left border-l border-warm-100">
-                    {DISPLAY_NAMES[p]}
-                  </th>
-                ))}
-              </tr>
-              <tr className="border-b border-warm-100">
-                <th className="sticky left-0 bg-cream-100" />
-                {ALL_PLAYERS.map((p) => (
-                  ['1st', '2nd', 'WC'].map((label, i) => (
-                    <th key={`${p}-${label}`} className={`py-2 px-4 text-xs tracking-widest uppercase text-warm-300 font-normal text-left ${i === 0 ? 'border-l border-warm-100' : ''}`}>
-                      {label}
-                    </th>
-                  ))
-                ))}
+              <tr className="border-b border-navy-600 bg-navy-800">
+                <th className="text-left py-3 px-4 font-display tracking-widest uppercase text-white/40 font-600">Group</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-gold-400/70 font-600 text-left">Em 1st</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-gold-400/70 font-600 text-left">Em 2nd</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-gold-400/70 font-600 text-left border-r border-navy-600">Em WC</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-ucl-blue/70 font-600 text-left">Ro 1st</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-ucl-blue/70 font-600 text-left">Ro 2nd</th>
+                <th className="py-3 px-4 font-display tracking-widest uppercase text-ucl-blue/70 font-600 text-left">Ro WC</th>
               </tr>
             </thead>
             <tbody>
               {GROUPS.map((group, gi) => {
+                const em = allPicks.em.group_picks[group.id] ?? { first: null, second: null, third: null };
+                const ro = allPicks.ro.group_picks[group.id] ?? { first: null, second: null, third: null };
                 return (
-                  <tr key={group.id} className={`border-b border-warm-100 ${gi % 2 === 0 ? '' : 'bg-cream-200/40'}`}>
-                    <td className="py-3 px-4 font-serif text-warm-900 sticky left-0 bg-inherit">Group {group.id}</td>
-                    {ALL_PLAYERS.map((p) => {
-                      const gp = allPicks[p].group_picks[group.id] ?? { first: null, second: null, third: null };
-                      return [gp.first, gp.second, gp.third].map((t, j) => (
-                        <td key={`${p}-${j}`} className={`py-3 px-4 text-warm-600 ${j === 0 ? 'border-l border-warm-100' : ''}`}>
-                          {t ? `${TEAM_FLAGS[t] ?? ''} ${t}` : <span className="text-warm-200">—</span>}
-                        </td>
-                      ));
-                    })}
+                  <tr key={group.id} className={`border-b border-navy-700 ${gi % 2 === 0 ? 'bg-navy-800' : 'bg-navy-800/50'}`}>
+                    <td className="py-3 px-4 font-display font-700 tracking-wider text-white uppercase">
+                      Group {group.id}
+                    </td>
+                    {[em.first, em.second, em.third].map((t, j) => (
+                      <td key={j} className="py-3 px-4 text-white/60">
+                        {t ? `${TEAM_FLAGS[t] ?? ''} ${t}` : <span className="text-white/20">—</span>}
+                      </td>
+                    ))}
+                    {[ro.first, ro.second, ro.third].map((t, j) => (
+                      <td key={j} className={`py-3 px-4 text-white/60 ${j === 0 ? 'border-l border-navy-600' : ''}`}>
+                        {t ? `${TEAM_FLAGS[t] ?? ''} ${t}` : <span className="text-white/20">—</span>}
+                      </td>
+                    ))}
                   </tr>
                 );
               })}

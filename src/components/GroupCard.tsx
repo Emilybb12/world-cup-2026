@@ -7,10 +7,10 @@ interface Props {
   onPick: (position: 'first' | 'second' | 'third', team: string | null) => void;
 }
 
-const POSITIONS: Array<{ key: 'first' | 'second' | 'third'; label: string }> = [
-  { key: 'first',  label: '1st Place'      },
-  { key: 'second', label: '2nd Place'      },
-  { key: 'third',  label: '3rd — Wildcard' },
+const POSITIONS: Array<{ key: 'first' | 'second' | 'third'; label: string; badge: string }> = [
+  { key: 'first',  label: '1st Place',      badge: '🥇' },
+  { key: 'second', label: '2nd Place',      badge: '🥈' },
+  { key: 'third',  label: '3rd — Wildcard', badge: '🃏' },
 ];
 
 export function GroupCard({ group, pick, onPick }: Props) {
@@ -18,32 +18,37 @@ export function GroupCard({ group, pick, onPick }: Props) {
 
   return (
     <div className={[
-      'border transition-all duration-300',
-      isComplete ? 'border-warm-900' : 'border-warm-200',
+      'border transition-all duration-300 bg-navy-800',
+      isComplete ? 'border-gold-500' : 'border-navy-600',
     ].join(' ')}>
 
       {/* Header */}
-      <div className="px-5 py-4 border-b border-warm-100 flex items-center justify-between">
-        <span className="font-serif text-xl font-light text-warm-900">
+      <div className={[
+        'px-4 py-3 border-b flex items-center justify-between',
+        isComplete ? 'border-gold-500/30 bg-gold-400/5' : 'border-navy-600',
+      ].join(' ')}>
+        <span className="font-display font-800 text-xl tracking-wider text-white uppercase">
           Group {group.id}
         </span>
         {isComplete && (
-          <span className="text-xs tracking-widest uppercase text-warm-400">Complete</span>
+          <span className="text-xs font-display tracking-widest uppercase text-gold-400">✓ Done</span>
         )}
       </div>
 
       {/* Positions */}
-      <div className="divide-y divide-warm-100">
-        {POSITIONS.map(({ key, label }) => {
+      <div className="divide-y divide-navy-700">
+        {POSITIONS.map(({ key, label, badge }) => {
           const selected = pick[key];
           return (
-            <div key={key} className="px-5 py-3">
+            <div key={key} className="px-4 py-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs tracking-widest uppercase text-warm-400">{label}</span>
+                <span className="text-xs font-display tracking-widest uppercase text-white/40">
+                  {badge} {label}
+                </span>
                 {selected && (
                   <button
                     onClick={() => onPick(key, null)}
-                    className="text-xs text-warm-300 hover:text-warm-600 transition-colors"
+                    className="text-xs text-white/20 hover:text-white/60 transition-colors"
                   >
                     Clear
                   </button>
@@ -62,12 +67,12 @@ export function GroupCard({ group, pick, onPick }: Props) {
                       onClick={() => !isUsedElsewhere && onPick(key, team)}
                       disabled={isUsedElsewhere}
                       className={[
-                        'text-left px-3 py-2 text-xs flex items-center gap-2 transition-all duration-150 border',
+                        'text-left px-2 py-2 text-xs flex items-center gap-1.5 border transition-all duration-150',
                         isSelected
-                          ? 'border-pitch-600 bg-pitch-600 text-cream-100'
+                          ? 'border-gold-400 bg-gold-400/15 text-gold-300 font-500'
                           : isUsedElsewhere
-                          ? 'border-transparent text-warm-200 cursor-not-allowed'
-                          : 'border-transparent hover:border-warm-200 text-warm-600 hover:text-warm-900 cursor-pointer',
+                          ? 'border-transparent text-white/15 cursor-not-allowed'
+                          : 'border-transparent hover:border-navy-500 hover:bg-navy-700 text-white/60 hover:text-white cursor-pointer',
                       ].join(' ')}
                     >
                       <span>{TEAM_FLAGS[team] ?? '🏳'}</span>

@@ -21,8 +21,10 @@ export function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream-100 flex items-center justify-center">
-        <p className="font-serif text-2xl text-warm-400 tracking-wide">Loading…</p>
+      <div className="min-h-screen bg-navy-900 flex items-center justify-center">
+        <p className="font-display text-3xl font-bold tracking-widest text-gold-400 animate-pulse">
+          LOADING…
+        </p>
       </div>
     );
   }
@@ -30,37 +32,58 @@ export function App() {
   const currentPicks = picks[player];
 
   return (
-    <div className="min-h-screen bg-cream-100 text-warm-900">
+    <div className="min-h-screen bg-navy-900 text-white">
 
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-cream-100/95 backdrop-blur border-b border-warm-100">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
 
-          {/* Top bar */}
-          <div className="flex items-center justify-between py-5">
-            <div>
-              <p className="text-xs tracking-widest2 uppercase text-warm-400 font-normal mb-0.5">
-                2026 FIFA World Cup
-              </p>
-              <h1 className="font-serif text-2xl font-light text-warm-900 leading-none flex items-center gap-2">
-                <span>BBSK Family Predictions</span>
-                <span className="text-lg">⚽</span>
-              </h1>
+        {/* Gold top line */}
+        <div className="h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
+
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between py-4">
+            <div className="flex items-center gap-4">
+              {/* Star badge */}
+              <div className="flex flex-col items-center gap-0.5">
+                <div className="flex gap-0.5">
+                  {[...Array(3)].map((_, i) => (
+                    <span key={i} className="text-gold-400 text-xs">★</span>
+                  ))}
+                </div>
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-gold-400 text-xs">★</span>
+                  ))}
+                </div>
+                <div className="flex gap-0.5">
+                  {[...Array(3)].map((_, i) => (
+                    <span key={i} className="text-gold-400 text-xs">★</span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="font-display text-xs font-600 tracking-widest text-gold-400 uppercase">
+                  2026 FIFA World Cup
+                </p>
+                <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase">
+                  BBSK Family Predictions
+                </h1>
+              </div>
             </div>
             <PlayerSelector current={player} onChange={setPlayer} />
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-8">
+          <div className="flex gap-0">
             {TABS.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={[
-                  'pb-4 text-xs tracking-widest uppercase font-normal border-b transition-all duration-200',
+                  'px-6 py-3 font-display font-700 text-sm tracking-widest uppercase border-b-2 transition-all duration-150',
                   tab === t.id
-                    ? 'border-pitch-500 text-warm-900'
-                    : 'border-transparent text-warm-400 hover:text-warm-600',
+                    ? 'border-gold-400 text-gold-400'
+                    : 'border-transparent text-white/40 hover:text-white/70',
                 ].join(' ')}
               >
                 {t.label}
@@ -73,14 +96,14 @@ export function App() {
       {/* Error */}
       {error && (
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 pt-6">
-          <p className="text-xs text-red-500 border border-red-200 bg-red-50 px-4 py-3 rounded">
+          <p className="text-xs text-red-400 border border-red-800 bg-red-950/50 px-4 py-3 rounded">
             Supabase error: {error}
           </p>
         </div>
       )}
 
       {/* Content */}
-      <main className="max-w-screen-xl mx-auto px-6 lg:px-12 py-10">
+      <main className="max-w-screen-xl mx-auto px-6 lg:px-12 py-8">
         {tab === 'groups' && (
           <GroupStage
             groupPicks={currentPicks.group_picks}
@@ -104,8 +127,8 @@ export function App() {
       </main>
 
       {/* Live indicator */}
-      <div className="fixed bottom-6 right-6 flex items-center gap-2 text-xs text-warm-400 tracking-wider uppercase">
-        <span className="w-1.5 h-1.5 rounded-full bg-warm-300 animate-pulse" />
+      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-navy-800 border border-navy-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-white/40">
+        <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
         Live
       </div>
     </div>
