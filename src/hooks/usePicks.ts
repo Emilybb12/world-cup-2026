@@ -19,13 +19,14 @@ function makeDefault(player: Player): PlayerPicks {
   };
 }
 
+export const ALL_PLAYERS: Player[] = ['em', 'allie', 'brian', 'kathleen', 'jaivon', 'zay'];
+
 type AllPicks = Record<Player, PlayerPicks>;
 
 export function usePicks() {
-  const [picks, setPicks] = useState<AllPicks>({
-    em: makeDefault('em'),
-    ro: makeDefault('ro'),
-  });
+  const [picks, setPicks] = useState<AllPicks>(
+    Object.fromEntries(ALL_PLAYERS.map((p) => [p, makeDefault(p)])) as AllPicks
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,15 +39,14 @@ export function usePicks() {
       const { data, error } = await supabase
         .from('player_picks')
         .select('*')
-        .in('player', ['em', 'ro']);
+        .in('player', ALL_PLAYERS);
 
       if (error) {
         setError(error.message);
       } else {
-        const next: AllPicks = {
-          em: makeDefault('em'),
-          ro: makeDefault('ro'),
-        };
+        const next: AllPicks = Object.fromEntries(
+          ALL_PLAYERS.map((p) => [p, makeDefault(p)])
+        ) as AllPicks;
         for (const row of data ?? []) {
           const p = row.player as Player;
           next[p] = {

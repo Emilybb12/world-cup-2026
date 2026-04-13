@@ -98,7 +98,7 @@ export function App() {
           />
         )}
         {tab === 'leaderboard' && (
-          <Leaderboard emPicks={picks.em} roPicks={picks.ro} />
+          <Leaderboard allPicks={picks} />
         )}
       </main>
 
