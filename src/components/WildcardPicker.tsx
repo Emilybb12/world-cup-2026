@@ -27,7 +27,7 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
     <div className="mb-12 border border-warm-200 p-8">
       <div className="flex items-end justify-between mb-6">
         <div>
-          <h3 className="font-serif text-2xl italic font-light text-warm-900 mb-1">
+          <h3 className="font-serif text-2xl font-light text-warm-900 mb-1">
             Wildcard Selection
           </h3>
           <p className="text-xs tracking-widest uppercase text-warm-400">

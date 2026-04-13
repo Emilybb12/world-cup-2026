@@ -32,7 +32,7 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        serif: ['DM Serif Display', 'Georgia', 'serif'],
         sans:  ['Inter', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {

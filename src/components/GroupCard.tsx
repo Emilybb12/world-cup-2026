@@ -24,7 +24,7 @@ export function GroupCard({ group, pick, onPick }: Props) {
 
       {/* Header */}
       <div className="px-5 py-4 border-b border-warm-100 flex items-center justify-between">
-        <span className="font-serif text-xl italic font-light text-warm-900">
+        <span className="font-serif text-xl font-light text-warm-900">
           Group {group.id}
         </span>
         {isComplete && (

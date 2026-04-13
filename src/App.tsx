@@ -22,7 +22,7 @@ export function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-cream-100 flex items-center justify-center">
-        <p className="font-serif text-2xl text-warm-400 italic tracking-wide">Loading…</p>
+        <p className="font-serif text-2xl text-warm-400 tracking-wide">Loading…</p>
       </div>
     );
   }
@@ -42,7 +42,7 @@ export function App() {
               <p className="text-xs tracking-widest2 uppercase text-warm-400 font-normal mb-0.5">
                 2026 FIFA World Cup
               </p>
-              <h1 className="font-serif text-2xl font-light italic text-warm-900 leading-none">
+              <h1 className="font-serif text-2xl font-light text-warm-900 leading-none">
                 Em & Ro's Predictions
               </h1>
             </div>

@@ -18,7 +18,7 @@ export function GroupStage({ groupPicks, onPick }: Props) {
       {/* Progress */}
       <div className="mb-10 flex items-end justify-between border-b border-warm-100 pb-6">
         <div>
-          <h2 className="font-serif text-3xl italic font-light text-warm-900 mb-1">
+          <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">
             Group Stage
           </h2>
           <p className="text-xs tracking-widest uppercase text-warm-400">

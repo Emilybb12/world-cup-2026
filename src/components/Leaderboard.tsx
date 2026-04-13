@@ -47,7 +47,7 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
     <div className="border border-warm-200 flex-1 min-w-[280px]">
       {/* Name */}
       <div className="px-8 py-6 border-b border-warm-100 flex items-end justify-between">
-        <h3 className="font-serif text-4xl italic font-light text-warm-900">{name}</h3>
+        <h3 className="font-serif text-4xl font-light text-warm-900">{name}</h3>
         <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">
           {pct === 100 ? 'Complete' : `${pct}%`}
         </p>
@@ -93,11 +93,11 @@ function PlayerCard({ name, picks }: PlayerCardProps) {
       <div className="px-8 py-6">
         <p className="text-xs tracking-widest uppercase text-warm-400 mb-2">Picked Champion</p>
         {champion ? (
-          <p className="font-serif text-2xl italic font-light text-warm-900">
+          <p className="font-serif text-2xl font-light text-warm-900">
             {TEAM_FLAGS[champion] ?? ''} {champion}
           </p>
         ) : (
-          <p className="font-serif text-xl italic text-warm-300">Not yet picked</p>
+          <p className="font-serif text-xl text-warm-300">Not yet picked</p>
         )}
       </div>
     </div>
@@ -112,7 +112,7 @@ export function Leaderboard({ emPicks, roPicks }: Props) {
   return (
     <div>
       <div className="mb-10 border-b border-warm-100 pb-6">
-        <h2 className="font-serif text-3xl italic font-light text-warm-900 mb-1">Leaderboard</h2>
+        <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">Leaderboard</h2>
         <p className="text-xs tracking-widest uppercase text-warm-400">
           Completion &amp; champion picks
         </p>
@@ -120,7 +120,7 @@ export function Leaderboard({ emPicks, roPicks }: Props) {
 
       {sameChampion && (
         <div className="mb-8 border border-warm-900 px-8 py-5">
-          <p className="font-serif text-xl italic font-light text-warm-900 text-center">
+          <p className="font-serif text-xl font-light text-warm-900 text-center">
             Em &amp; Ro both picked {TEAM_FLAGS[emChamp] ?? ''} {emChamp} to win it all
           </p>
         </div>
@@ -153,7 +153,7 @@ export function Leaderboard({ emPicks, roPicks }: Props) {
                 const ro = roPicks.group_picks[group.id] ?? { first: null, second: null, third: null };
                 return (
                   <tr key={group.id} className={`border-b border-warm-100 ${i % 2 === 0 ? '' : 'bg-cream-200/40'}`}>
-                    <td className="py-3 px-4 font-serif italic text-warm-900">Group {group.id}</td>
+                    <td className="py-3 px-4 font-serif text-warm-900">Group {group.id}</td>
                     {[em.first, em.second, em.third].map((t, j) => (
                       <td key={j} className="py-3 px-4 text-warm-600">
                         {t ? `${TEAM_FLAGS[t] ?? ''} ${t}` : <span className="text-warm-200">—</span>}

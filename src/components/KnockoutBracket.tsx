@@ -134,7 +134,7 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
   if (!allGroupsDone) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-center">
-        <p className="font-serif text-3xl italic font-light text-warm-300 mb-2">Not yet</p>
+        <p className="font-serif text-3xl font-light text-warm-300 mb-2">Not yet</p>
         <p className="text-xs tracking-widest uppercase text-warm-300">
           Complete all 12 groups first
         </p>
@@ -147,7 +147,7 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
   return (
     <div>
       <div className="mb-10 border-b border-warm-100 pb-6">
-        <h2 className="font-serif text-3xl italic font-light text-warm-900 mb-1">Knockout Bracket</h2>
+        <h2 className="font-serif text-3xl font-light text-warm-900 mb-1">Knockout Bracket</h2>
         <p className="text-xs tracking-widest uppercase text-warm-400">
           Click a team to advance them to the next round
         </p>
@@ -170,7 +170,7 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
         <div className="mb-10 border border-warm-900 px-8 py-6 flex items-center gap-6">
           <div>
             <p className="text-xs tracking-widest uppercase text-warm-400 mb-1">Champion</p>
-            <p className="font-serif text-3xl italic font-light text-warm-900">
+            <p className="font-serif text-3xl font-light text-warm-900">
               {TEAM_FLAGS[champion] ?? ''} {champion}
             </p>
           </div>
