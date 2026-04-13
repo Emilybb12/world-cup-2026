@@ -43,27 +43,15 @@ export function App() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-4">
-              {/* Star badge */}
-              <div className="flex flex-col items-center gap-0.5">
-                <div className="flex gap-0.5">
-                  {[...Array(3)].map((_, i) => (
-                    <span key={i} className="text-gold-400 text-xs">★</span>
-                  ))}
-                </div>
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-gold-400 text-xs">★</span>
-                  ))}
-                </div>
-                <div className="flex gap-0.5">
-                  {[...Array(3)].map((_, i) => (
-                    <span key={i} className="text-gold-400 text-xs">★</span>
-                  ))}
-                </div>
+              {/* FIFA-style badge */}
+              <div className="flex flex-col items-center justify-center border-2 border-gold-400 px-2 py-1 min-w-[48px]">
+                <span className="font-display font-800 text-gold-400 text-lg leading-none tracking-widest">FIFA</span>
+                <div className="h-px w-full bg-gold-400 my-0.5" />
+                <span className="font-display font-600 text-gold-400 text-[8px] leading-none tracking-widest">2026</span>
               </div>
               <div>
                 <p className="font-display text-xs font-600 tracking-widest text-gold-400 uppercase">
-                  2026 FIFA World Cup
+                  World Cup
                 </p>
                 <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase">
                   Ro & Em Predictions
