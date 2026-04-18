@@ -11,7 +11,7 @@ interface Props {
 
 export function PlayerSelector({ current, authPlayer, onChange }: Props) {
   return (
-    <div className="flex border border-ink-200 overflow-hidden">
+    <div className="flex border border-field-600 overflow-hidden">
       {ALL_PLAYERS.map((p) => {
         const isViewing = current === p;
         const isMe = authPlayer === p;
@@ -22,13 +22,13 @@ export function PlayerSelector({ current, authPlayer, onChange }: Props) {
             className={[
               'px-5 py-2 font-display font-700 text-sm tracking-widest uppercase transition-all duration-150 flex items-center gap-1.5',
               isViewing
-                ? 'bg-ink-900 text-off-white'
-                : 'text-ink-300 hover:text-ink-700',
+                ? 'bg-gold-500 text-field-900'
+                : 'text-field-200 hover:text-white',
             ].join(' ')}
           >
             {DISPLAY_NAMES[p]}
             {isMe && (
-              <span className={`text-xs ${isViewing ? 'text-off-300' : 'text-ink-200'}`}>★</span>
+              <span className={`text-xs ${isViewing ? 'text-field-700' : 'text-field-400'}`}>★</span>
             )}
           </button>
         );

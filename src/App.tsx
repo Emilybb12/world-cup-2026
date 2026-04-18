@@ -50,8 +50,8 @@ export function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-off-white flex items-center justify-center">
-        <p className="font-display font-800 text-2xl tracking-widest text-ink-400 uppercase animate-pulse">
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="font-display font-800 text-2xl tracking-widest text-gold-400 uppercase animate-pulse">
           Loading…
         </p>
       </div>
@@ -81,29 +81,32 @@ export function App() {
   const isOwnProfile = currentViewPlayer === authPlayer;
 
   return (
-    <div className="min-h-screen bg-off-white text-ink-900">
+    <div className="min-h-screen text-field-50">
 
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-off-white/95 backdrop-blur border-b border-ink-100">
+      {/* Gold top bar */}
+      <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
+
+      <header className="sticky top-0 z-10 bg-field-900/95 backdrop-blur border-b border-field-600">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
 
-            {/* Logo area */}
             <div className="flex items-center gap-4">
-              <div className="border-2 border-ink-900 px-2 py-1 flex flex-col items-center">
-                <span className="font-display font-800 text-ink-900 text-lg leading-none tracking-widest">FIFA</span>
-                <div className="h-px w-full bg-ink-900 my-0.5" />
-                <span className="font-display font-600 text-ink-900 text-[8px] leading-none tracking-widest">2026</span>
+              {/* FIFA badge — gold bordered */}
+              <div className="border-2 border-gold-500 px-2 py-1 flex flex-col items-center">
+                <span className="font-display font-800 text-gold-400 text-lg leading-none tracking-widest">FIFA</span>
+                <div className="h-px w-full bg-gold-500/50 my-0.5" />
+                <span className="font-display font-600 text-gold-500 text-[8px] leading-none tracking-widest">2026</span>
               </div>
               <div>
-                <p className="font-display text-xs font-600 tracking-widest text-ink-400 uppercase">World Cup</p>
-                <h1 className="font-display text-2xl font-800 tracking-wide text-ink-900 uppercase leading-none">
+                <p className="font-display text-xs font-600 tracking-widest text-gold-500 uppercase">
+                  World Cup ⚽
+                </p>
+                <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase leading-none">
                   Ro & Em Predictions
                 </h1>
               </div>
             </div>
 
-            {/* Player selector + logout */}
             <div className="flex items-center gap-2">
               <PlayerSelector
                 current={currentViewPlayer}
@@ -112,7 +115,7 @@ export function App() {
               />
               <button
                 onClick={handleLogout}
-                className="text-xs font-display tracking-widest uppercase text-ink-300 hover:text-ink-700 transition-colors border border-ink-200 px-3 py-2 hover:border-ink-400"
+                className="text-xs font-display tracking-widest uppercase text-field-200 hover:text-white transition-colors border border-field-600 px-3 py-2 hover:border-field-400"
                 title="Switch user"
               >
                 ⇄
@@ -120,14 +123,12 @@ export function App() {
             </div>
           </div>
 
-          {/* Read-only banner */}
           {!isOwnProfile && (
-            <div className="mb-3 px-4 py-2 bg-ink-900 text-off-white text-xs font-display tracking-widest uppercase text-center">
+            <div className="mb-3 px-4 py-2 bg-pitch-700 border border-pitch-500 text-pitch-100 text-xs font-display tracking-widest uppercase text-center">
               Viewing {currentViewPlayer === 'em' ? 'Em' : 'Ro'}'s picks — read only
             </div>
           )}
 
-          {/* Tabs */}
           <div className="flex">
             {TABS.map((t) => (
               <button
@@ -136,8 +137,8 @@ export function App() {
                 className={[
                   'px-6 py-3 font-display font-700 text-sm tracking-widest uppercase border-b-2 transition-all duration-150',
                   tab === t.id
-                    ? 'border-ink-900 text-ink-900'
-                    : 'border-transparent text-ink-300 hover:text-ink-600',
+                    ? 'border-gold-500 text-gold-400'
+                    : 'border-transparent text-field-300 hover:text-white',
                 ].join(' ')}
               >
                 {t.label}
@@ -149,14 +150,14 @@ export function App() {
 
       {error && (
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 pt-6">
-          <p className="text-xs text-red-600 border border-red-200 bg-red-50 px-4 py-3">
+          <p className="text-xs text-red-400 border border-red-900/50 bg-red-950/30 px-4 py-3">
             Supabase error: {error}
           </p>
         </div>
       )}
 
       <main className="max-w-screen-xl mx-auto px-6 lg:px-12 py-8">
-        <div className={isOwnProfile ? '' : 'pointer-events-none opacity-60'}>
+        <div className={isOwnProfile ? '' : 'pointer-events-none opacity-50'}>
           {tab === 'groups' && (
             <GroupStage
               groupPicks={currentPicks.group_picks}
@@ -178,8 +179,8 @@ export function App() {
         {tab === 'leaderboard' && <Leaderboard allPicks={picks} />}
       </main>
 
-      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-white border border-ink-100 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-ink-300">
-        <span className="w-1.5 h-1.5 rounded-full bg-ink-900 animate-pulse" />
+      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-field-800 border border-field-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-field-200">
+        <span className="w-1.5 h-1.5 rounded-full bg-pitch-400 animate-pulse" />
         Live
       </div>
     </div>

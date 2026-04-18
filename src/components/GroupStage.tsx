@@ -20,25 +20,25 @@ export function GroupStage({ groupPicks, onPick }: Props) {
       {/* Header */}
       <div className="mb-8 flex items-end justify-between">
         <div>
-          <h2 className="font-display font-800 text-4xl tracking-wide text-ink-900 uppercase mb-1">
+          <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
             Group Stage
           </h2>
-          <p className="text-sm text-ink-400 tracking-wider">
+          <p className="text-sm text-field-200 tracking-wider">
             Click a group to pick 1st, 2nd &amp; wildcard
           </p>
         </div>
         <div className="text-right">
-          <p className="font-display font-700 text-4xl text-ink-900">
-            {pct}<span className="text-ink-200 text-2xl">%</span>
+          <p className="font-display font-700 text-4xl text-white">
+            {pct}<span className="text-field-400 text-2xl">%</span>
           </p>
-          <p className="text-xs text-ink-400 tracking-widest uppercase">{completed}/{GROUPS.length} Groups</p>
+          <p className="text-xs text-field-300 tracking-widest uppercase">{completed}/{GROUPS.length} Groups</p>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-px bg-ink-100 mb-8 relative">
+      <div className="h-px bg-field-600 mb-8 relative">
         <div
-          className="absolute top-0 left-0 h-px bg-ink-900 transition-all duration-700"
+          className="absolute top-0 left-0 h-px bg-gold-500 transition-all duration-700"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -56,7 +56,7 @@ export function GroupStage({ groupPicks, onPick }: Props) {
       </div>
 
       {completed < GROUPS.length && (
-        <p className="mt-8 text-center text-xs tracking-widest uppercase text-ink-200 font-display">
+        <p className="mt-8 text-center text-xs tracking-widest uppercase text-field-400 font-display">
           Complete all groups to unlock the bracket
         </p>
       )}

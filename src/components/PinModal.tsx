@@ -34,17 +34,17 @@ export function PinModal({ player, hasPin, onSuccess, onCancel, onSetPin, onChec
   }
 
   return (
-    <div className="fixed inset-0 bg-ink-900/60 backdrop-blur z-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-ink-200 w-full max-w-sm p-8">
-        <p className="text-xs font-display tracking-widest uppercase text-ink-400 mb-1">
+    <div className="fixed inset-0 bg-field-950/85 backdrop-blur z-50 flex items-center justify-center p-4">
+      <div className="bg-field-800 border border-field-600 w-full max-w-sm p-8">
+        <p className="text-xs font-display tracking-widest uppercase text-field-300 mb-1">
           {hasPin ? 'Enter your PIN' : 'Create your PIN'}
         </p>
-        <h2 className="font-display font-800 text-4xl tracking-wide text-ink-900 uppercase mb-6">
+        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-6">
           {DISPLAY_NAMES[player]}
         </h2>
 
         <div className="mb-4">
-          <label className="text-xs font-display tracking-widest uppercase text-ink-400 mb-2 block">
+          <label className="text-xs font-display tracking-widest uppercase text-field-300 mb-2 block">
             4-digit PIN
           </label>
           <input
@@ -54,7 +54,7 @@ export function PinModal({ player, hasPin, onSuccess, onCancel, onSetPin, onChec
             value={pin}
             onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-            className="w-full bg-off-white border border-ink-200 text-ink-900 text-center text-2xl font-display tracking-[0.5em] py-3 focus:outline-none focus:border-ink-900 transition-colors"
+            className="w-full bg-field-900 border border-field-600 text-white text-center text-2xl font-display tracking-[0.5em] py-3 focus:outline-none focus:border-gold-500 transition-colors"
             placeholder="••••"
             autoFocus
           />
@@ -62,7 +62,7 @@ export function PinModal({ player, hasPin, onSuccess, onCancel, onSetPin, onChec
 
         {!hasPin && (
           <div className="mb-4">
-            <label className="text-xs font-display tracking-widest uppercase text-ink-400 mb-2 block">
+            <label className="text-xs font-display tracking-widest uppercase text-field-300 mb-2 block">
               Confirm PIN
             </label>
             <input
@@ -72,25 +72,25 @@ export function PinModal({ player, hasPin, onSuccess, onCancel, onSetPin, onChec
               value={confirm}
               onChange={(e) => setConfirm(e.target.value.replace(/\D/g, '').slice(0, 4))}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-              className="w-full bg-off-white border border-ink-200 text-ink-900 text-center text-2xl font-display tracking-[0.5em] py-3 focus:outline-none focus:border-ink-900 transition-colors"
+              className="w-full bg-field-900 border border-field-600 text-white text-center text-2xl font-display tracking-[0.5em] py-3 focus:outline-none focus:border-gold-500 transition-colors"
               placeholder="••••"
             />
           </div>
         )}
 
-        {error && <p className="text-xs text-red-500 font-display tracking-wider mb-4">{error}</p>}
+        {error && <p className="text-xs text-red-400 font-display tracking-wider mb-4">{error}</p>}
 
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full py-3 bg-ink-900 text-white font-display font-800 tracking-widest uppercase text-sm hover:bg-ink-700 transition-colors disabled:opacity-50 mb-3"
+          className="w-full py-3 bg-gold-500 text-field-900 font-display font-800 tracking-widest uppercase text-sm hover:bg-gold-400 transition-colors disabled:opacity-50 mb-3"
         >
           {loading ? 'Saving…' : hasPin ? 'Unlock' : 'Set PIN & Enter'}
         </button>
 
         <button
           onClick={onCancel}
-          className="w-full py-2 text-xs font-display tracking-widest uppercase text-ink-300 hover:text-ink-700 transition-colors"
+          className="w-full py-2 text-xs font-display tracking-widest uppercase text-field-300 hover:text-white transition-colors"
         >
           Cancel
         </button>
