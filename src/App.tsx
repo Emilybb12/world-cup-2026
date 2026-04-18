@@ -64,7 +64,7 @@ export function App() {
   if (!authPlayer) {
     return (
       <>
-        <WhoAreYou allPicks={picks} onSelect={handleWhoAreYou} />
+        <WhoAreYou onSelect={handleWhoAreYou} />
         {pinTarget && (
           <PinModal
             player={pinTarget}
