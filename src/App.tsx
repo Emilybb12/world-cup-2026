@@ -14,10 +14,10 @@ import { MatchesTab } from './components/MatchesTab';
 type Tab = 'groups' | 'bracket' | 'leaderboard' | 'matches';
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'groups',      label: 'Group Stage', icon: '🗂️'  },
-  { id: 'bracket',     label: 'Bracket',     icon: '🏆'  },
   { id: 'leaderboard', label: 'Leaderboard', icon: '📊'  },
   { id: 'matches',     label: 'Matches',     icon: '⚽'  },
+  { id: 'groups',      label: 'Group Stage', icon: '🗂️'  },
+  { id: 'bracket',     label: 'Bracket',     icon: '🏆'  },
 ];
 
 const SESSION_KEY = 'wc2026_auth';
@@ -28,7 +28,7 @@ export function App() {
   });
   const [viewPlayer, setViewPlayer] = useState<Player | null>(authPlayer);
   const [pinTarget, setPinTarget] = useState<Player | null>(null);
-  const [tab, setTab] = useState<Tab>('groups');
+  const [tab, setTab] = useState<Tab>('leaderboard');
 
   const { picks, pins, loading, error, savePin, updateGroupPick, updateWildcardPicks, updateKnockoutPick } = usePicks();
   const { matches, todayMatches, hasCreds, loading: scoresLoading } = useScores();
