@@ -67,8 +67,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Barlow Condensed', 'sans-serif'],
-        sans:    ['Barlow', 'system-ui', 'sans-serif'],
+        display: ['Nunito', 'sans-serif'],
+        sans:    ['Nunito', 'system-ui', 'sans-serif'],
       },
     },
   },
