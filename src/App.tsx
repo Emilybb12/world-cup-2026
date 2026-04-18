@@ -9,13 +9,15 @@ import { Leaderboard } from './components/Leaderboard';
 import { WhoAreYou } from './components/WhoAreYou';
 import { PinModal } from './components/PinModal';
 import { ScoreTicker } from './components/ScoreTicker';
+import { MatchesTab } from './components/MatchesTab';
 
-type Tab = 'groups' | 'bracket' | 'leaderboard';
+type Tab = 'groups' | 'bracket' | 'leaderboard' | 'matches';
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'groups',      label: 'Group Stage', icon: '🗂️'  },
   { id: 'bracket',     label: 'Bracket',     icon: '🏆'  },
   { id: 'leaderboard', label: 'Leaderboard', icon: '📊'  },
+  { id: 'matches',     label: 'Matches',     icon: '⚽'  },
 ];
 
 const SESSION_KEY = 'wc2026_auth';
@@ -29,7 +31,7 @@ export function App() {
   const [tab, setTab] = useState<Tab>('groups');
 
   const { picks, pins, loading, error, savePin, updateGroupPick, updateWildcardPicks, updateKnockoutPick } = usePicks();
-  const { matches } = useScores();
+  const { matches, todayMatches, hasCreds, loading: scoresLoading } = useScores();
 
   useEffect(() => {
     if (authPlayer && !viewPlayer) setViewPlayer(authPlayer);
@@ -154,7 +156,7 @@ export function App() {
       </header>
 
       {/* ── Score ticker ── */}
-      <ScoreTicker matches={matches} />
+      <ScoreTicker matches={todayMatches} />
 
       {error && (
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 pt-6">
@@ -210,6 +212,9 @@ export function App() {
             )}
           </div>
           {tab === 'leaderboard' && <Leaderboard allPicks={picks} />}
+          {tab === 'matches' && (
+            <MatchesTab matches={matches} hasCreds={hasCreds} loading={scoresLoading} />
+          )}
         </main>
       </div>
 
