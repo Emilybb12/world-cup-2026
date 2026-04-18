@@ -67,8 +67,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Nunito', 'sans-serif'],
-        sans:    ['Nunito', 'system-ui', 'sans-serif'],
+        display: ['Montserrat', 'sans-serif'],
+        sans:    ['Montserrat', 'system-ui', 'sans-serif'],
       },
     },
   },
