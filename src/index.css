@@ -4,21 +4,14 @@
 
 @layer base {
   body {
-    background-color: #091310;
-    background-image: repeating-linear-gradient(
-      180deg,
-      transparent 0px,
-      transparent 52px,
-      rgba(255, 255, 255, 0.018) 52px,
-      rgba(255, 255, 255, 0.018) 104px
-    );
-    color: #e0ede7;
+    background-color: #05080f;
+    color: #e0e8fa;
     font-family: 'Barlow', system-ui, sans-serif;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
   }
   * { box-sizing: border-box; }
   ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: #0f1d16; }
-  ::-webkit-scrollbar-thumb { background: #1d3828; border-radius: 2px; }
+  ::-webkit-scrollbar-track { background: #0c1228; }
+  ::-webkit-scrollbar-thumb { background: #1a2550; border-radius: 2px; }
 }

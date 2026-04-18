@@ -81,12 +81,12 @@ export function App() {
   const isOwnProfile = currentViewPlayer === authPlayer;
 
   return (
-    <div className="min-h-screen text-field-50">
+    <div className="min-h-screen text-navy-50">
 
       {/* Gold top bar */}
       <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
-      <header className="sticky top-0 z-10 bg-field-900/95 backdrop-blur border-b border-field-600">
+      <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
 
@@ -115,7 +115,7 @@ export function App() {
               />
               <button
                 onClick={handleLogout}
-                className="text-xs font-display tracking-widest uppercase text-field-200 hover:text-white transition-colors border border-field-600 px-3 py-2 hover:border-field-400"
+                className="text-xs font-display tracking-widest uppercase text-navy-200 hover:text-white transition-colors border border-navy-600 px-3 py-2 hover:border-navy-400"
                 title="Switch user"
               >
                 ⇄
@@ -124,7 +124,7 @@ export function App() {
           </div>
 
           {!isOwnProfile && (
-            <div className="mb-3 px-4 py-2 bg-pitch-700 border border-pitch-500 text-pitch-100 text-xs font-display tracking-widest uppercase text-center">
+            <div className="mb-3 px-4 py-2 bg-navy-700 border border-navy-500 text-navy-100 text-xs font-display tracking-widest uppercase text-center">
               Viewing {currentViewPlayer === 'em' ? 'Em' : 'Ro'}'s picks — read only
             </div>
           )}
@@ -138,7 +138,7 @@ export function App() {
                   'px-6 py-3 font-display font-700 text-sm tracking-widest uppercase border-b-2 transition-all duration-150',
                   tab === t.id
                     ? 'border-gold-500 text-gold-400'
-                    : 'border-transparent text-field-300 hover:text-white',
+                    : 'border-transparent text-navy-300 hover:text-white',
                 ].join(' ')}
               >
                 {t.label}
@@ -179,8 +179,8 @@ export function App() {
         {tab === 'leaderboard' && <Leaderboard allPicks={picks} />}
       </main>
 
-      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-field-800 border border-field-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-field-200">
-        <span className="w-1.5 h-1.5 rounded-full bg-pitch-400 animate-pulse" />
+      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-navy-800 border border-navy-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-navy-200">
+        <span className="w-1.5 h-1.5 rounded-full bg-star-400 animate-pulse" />
         Live
       </div>
     </div>

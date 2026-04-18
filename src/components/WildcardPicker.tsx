@@ -24,23 +24,23 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
   const isComplete = wildcardPicks.length === 8;
 
   return (
-    <div className="mb-10 border border-field-600 bg-field-800 p-6">
+    <div className="mb-10 border border-navy-600 bg-navy-800 p-6">
       <div className="flex items-end justify-between mb-5">
         <div>
           <h3 className="font-display font-800 text-2xl tracking-wide text-white uppercase mb-1">
             Wildcard Selection
           </h3>
-          <p className="text-xs text-field-200 tracking-wider">
+          <p className="text-xs text-navy-200 tracking-wider">
             Choose 8 of the 12 third-place teams to advance
           </p>
         </div>
-        <p className={`font-display font-700 text-3xl ${isComplete ? 'text-gold-400' : 'text-field-400'}`}>
-          {wildcardPicks.length}<span className="text-field-500">/8</span>
+        <p className={`font-display font-700 text-3xl ${isComplete ? 'text-gold-400' : 'text-navy-400'}`}>
+          {wildcardPicks.length}<span className="text-navy-500">/8</span>
         </p>
       </div>
 
       {!isComplete && needed > 0 && (
-        <p className="text-xs text-field-300 tracking-wider mb-4 font-display uppercase">
+        <p className="text-xs text-navy-300 tracking-wider mb-4 font-display uppercase">
           {needed} more selection{needed !== 1 ? 's' : ''} needed
         </p>
       )}
@@ -57,15 +57,15 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
               className={[
                 'flex items-center gap-2 px-3 py-2.5 text-xs border transition-all duration-150',
                 selected
-                  ? 'border-gold-500 bg-gold-500 text-field-900'
+                  ? 'border-gold-500 bg-gold-500 text-navy-900'
                   : disabled
-                  ? 'border-field-700 text-field-500 cursor-not-allowed'
-                  : 'border-field-600 text-field-100 hover:border-gold-400 hover:text-gold-300 cursor-pointer',
+                  ? 'border-navy-700 text-navy-500 cursor-not-allowed'
+                  : 'border-navy-600 text-navy-100 hover:border-gold-400 hover:text-gold-300 cursor-pointer',
               ].join(' ')}
             >
               <span>{TEAM_FLAGS[team] ?? '🏳'}</span>
               <span className="truncate">{team}</span>
-              {selected && <span className="ml-auto text-field-900/60 text-xs">✓</span>}
+              {selected && <span className="ml-auto text-navy-900/60 text-xs">✓</span>}
             </button>
           );
         })}
