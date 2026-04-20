@@ -16,10 +16,10 @@ function OutlineFilter() {
           <feMorphology in="SourceAlpha" operator="dilate" radius="2.5" result="dilated" />
           {/* Subtract original alpha → just the outline band */}
           <feComposite in="dilated" in2="SourceAlpha" operator="out" result="border" />
-          {/* Flood with gold */}
-          <feFlood floodColor="#c9a832" floodOpacity="1" result="gold" />
-          {/* Mask gold to the border shape */}
-          <feComposite in="gold" in2="border" operator="in" />
+          {/* Flood with light grey */}
+          <feFlood floodColor="#b8c8d8" floodOpacity="1" result="grey" />
+          {/* Mask grey to the border shape */}
+          <feComposite in="grey" in2="border" operator="in" />
         </filter>
       </defs>
     </svg>
@@ -59,37 +59,37 @@ export function PlayerSilhouettesBackground() {
         {/* Top-left — Modric running */}
         <PlayerOutline
           src="/silhouettes/modric.png"
-          style={{ position: 'absolute', top: '-6%', left: '-3%', width: '26vw', maxWidth: 300, opacity: 0.18 }}
+          style={{ position: 'absolute', top: '-8%', left: '-4%', width: '42vw', maxWidth: 520, opacity: 0.22 }}
         />
 
         {/* Top-right — Van Dijk roaring */}
         <PlayerOutline
           src="/silhouettes/vandijk.png"
-          style={{ position: 'absolute', top: '-4%', right: '-1%', width: '24vw', maxWidth: 280, opacity: 0.16, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', top: '-6%', right: '-4%', width: '38vw', maxWidth: 480, opacity: 0.2, transform: 'scaleX(-1)' }}
         />
 
         {/* Left middle — Mane running */}
         <PlayerOutline
           src="/silhouettes/mane.png"
-          style={{ position: 'absolute', top: '30%', left: '-2%', width: '22vw', maxWidth: 250, opacity: 0.15 }}
+          style={{ position: 'absolute', top: '25%', left: '-5%', width: '36vw', maxWidth: 440, opacity: 0.2 }}
         />
 
         {/* Right middle — Silva running */}
         <PlayerOutline
           src="/silhouettes/silva.png"
-          style={{ position: 'absolute', top: '27%', right: '-2%', width: '24vw', maxWidth: 270, opacity: 0.15, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', top: '22%', right: '-5%', width: '36vw', maxWidth: 440, opacity: 0.2, transform: 'scaleX(-1)' }}
         />
 
         {/* Bottom-left — Kane celebrating */}
         <PlayerOutline
           src="/silhouettes/kane.png"
-          style={{ position: 'absolute', bottom: '-2%', left: '-1%', width: '22vw', maxWidth: 250, opacity: 0.15 }}
+          style={{ position: 'absolute', bottom: '-8%', left: '-3%', width: '38vw', maxWidth: 460, opacity: 0.2 }}
         />
 
         {/* Bottom-right — Rodri fist pump */}
         <PlayerOutline
           src="/silhouettes/rodri.png"
-          style={{ position: 'absolute', bottom: '-4%', right: '2%', width: '18vw', maxWidth: 210, opacity: 0.14, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', bottom: '-6%', right: '-2%', width: '32vw', maxWidth: 400, opacity: 0.19, transform: 'scaleX(-1)' }}
         />
 
       </div>

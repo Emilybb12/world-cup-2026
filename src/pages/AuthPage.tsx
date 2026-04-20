@@ -64,14 +64,6 @@ export function AuthPage() {
       {/* Gold top bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
-      {/* Background watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-        <span className="font-display font-900 text-white/[0.025] leading-none tracking-widest"
-          style={{ fontSize: 'clamp(120px, 30vw, 320px)' }}>
-          2026
-        </span>
-      </div>
-
       {/* Player silhouettes */}
       <PlayerSilhouettesBackground />
 
