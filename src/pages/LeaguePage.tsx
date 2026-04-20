@@ -261,11 +261,14 @@ export function LeaguePage({ profile }: Props) {
         </main>
       </div>
 
-      {/* Live indicator */}
-      <div className="fixed bottom-5 right-5 flex items-center gap-2 bg-navy-800 border border-navy-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-navy-200">
+      {/* Live indicator — clicking jumps to Matches tab */}
+      <button
+        onClick={() => setTab('matches')}
+        className="fixed bottom-5 right-5 flex items-center gap-2 bg-navy-800 border border-navy-600 rounded-full px-4 py-2 text-xs font-display tracking-widest uppercase text-navy-200 hover:border-star-400 hover:text-white transition-colors"
+      >
         <span className="w-1.5 h-1.5 rounded-full bg-star-400 animate-pulse" />
-        Live
-      </div>
+        Live Scores
+      </button>
     </div>
   );
 }
