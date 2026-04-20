@@ -53,14 +53,6 @@ export function LeaguesPage({ profile }: Props) {
       {/* Gold top bar */}
       <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
-      {/* Background watermark */}
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
-        <span className="font-display font-900 text-white/[0.018] leading-none tracking-widest"
-          style={{ fontSize: 'clamp(100px, 25vw, 280px)' }}>
-          FIFA
-        </span>
-      </div>
-
       <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
         <div className="max-w-screen-sm mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
