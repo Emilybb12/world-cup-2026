@@ -45,6 +45,19 @@ export function LeaguePage({ profile }: Props) {
     });
   }, [league]);
 
+  const shareInvite = useCallback(async () => {
+    const code = league?.invite_code ?? '';
+    const text = `Join my World Cup 2026 bracket league! Use code ${code} at bracketpredicts.com`;
+    if (navigator.share) {
+      await navigator.share({ title: 'World Cup 2026 Bracket', text });
+    } else {
+      navigator.clipboard?.writeText(text).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  }, [league]);
+
   const loading = leagueLoading || picksLoading;
   const isOwnPicks = viewUserId === profile.id;
   const currentPicks: UserPicks | undefined = picks[viewUserId];
@@ -134,10 +147,21 @@ export function LeaguePage({ profile }: Props) {
                 </select>
               )}
 
+              {/* Share — mobile only */}
+              <button
+                className="sm:hidden flex items-center gap-1.5 border border-gold-500/60 px-2.5 py-2 text-gold-400 hover:border-gold-400 transition-colors"
+                onClick={shareInvite}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                <span className="text-xs font-display font-700 tracking-widest uppercase">Invite</span>
+              </button>
+
               {/* Invite code — desktop only */}
               <button
                 className="hidden sm:flex items-center gap-2 border border-navy-600 px-3 py-2 cursor-pointer hover:border-gold-500 transition-colors group"
-                title="Click to copy invite code"
                 onClick={copyInvite}
               >
                 <span className="text-xs font-display tracking-widest uppercase text-navy-400 group-hover:text-gold-400 transition-colors">
@@ -229,13 +253,18 @@ export function LeaguePage({ profile }: Props) {
                 Invite Code
               </p>
               <p
-                className="font-display font-800 text-gold-400 tracking-widest text-sm cursor-pointer hover:text-gold-300"
-                title="Click to copy"
+                className="font-display font-800 text-gold-400 tracking-widest text-sm cursor-pointer hover:text-gold-300 mb-2"
                 onClick={copyInvite}
               >
                 {copied ? '✓ Copied!' : league.invite_code}
               </p>
-              <p className="text-[10px] text-navy-500 mt-1">{members.length} member{members.length !== 1 ? 's' : ''}</p>
+              <button
+                onClick={shareInvite}
+                className="w-full text-[10px] font-display font-700 tracking-widest uppercase text-navy-300 hover:text-white border border-navy-600 hover:border-gold-500/50 py-1.5 transition-colors"
+              >
+                Share invite
+              </button>
+              <p className="text-[10px] text-navy-500 mt-2">{members.length} member{members.length !== 1 ? 's' : ''}</p>
             </div>
           </nav>
         </aside>
