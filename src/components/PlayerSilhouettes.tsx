@@ -56,27 +56,27 @@ export function PlayerSilhouettesBackground() {
       <OutlineFilter />
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
 
-        {/* Far left — Ronaldo: smaller + pushed off-screen on mobile */}
+        {/* Far left — Ronaldo */}
         <PlayerOutline
           src="/silhouettes/ronaldo.png"
           style={{
             position: 'absolute',
             top: '-5%',
             left: '-8%',
-            height: 'clamp(220px, 55vh, 900px)',
+            height: '110vh',
             width: 'auto',
             opacity: 0.22,
           }}
         />
 
-        {/* Far right — Van Dijk: smaller + pushed off-screen on mobile */}
+        {/* Far right — Van Dijk */}
         <PlayerOutline
           src="/silhouettes/vandijk.png"
           style={{
             position: 'absolute',
             top: '-5%',
             right: '-8%',
-            height: 'clamp(220px, 55vh, 900px)',
+            height: '110vh',
             width: 'auto',
             opacity: 0.2,
             transform: 'scaleX(-1)',
