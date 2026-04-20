@@ -31,17 +31,17 @@ export function LeaguePage({ profile }: Props) {
   const [viewUserId, setViewUserId] = useState<string>(profile.id);
   const [copied, setCopied] = useState(false);
 
+  const { league, members, loading: leagueLoading } = useLeague(leagueId ?? null, profile.id);
+  const { picks, loading: picksLoading, error, updateGroupPick, updateWildcardPicks, updateKnockoutPick } =
+    useLeaguePicks(leagueId ?? null, profile.id, members);
+  const { matches, todayMatches, hasCreds, loading: scoresLoading } = useScores();
+
   const copyInvite = useCallback(() => {
     navigator.clipboard?.writeText(league?.invite_code ?? '').then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
   }, [league]);
-
-  const { league, members, loading: leagueLoading } = useLeague(leagueId ?? null, profile.id);
-  const { picks, loading: picksLoading, error, updateGroupPick, updateWildcardPicks, updateKnockoutPick } =
-    useLeaguePicks(leagueId ?? null, profile.id, members);
-  const { matches, todayMatches, hasCreds, loading: scoresLoading } = useScores();
 
   const loading = leagueLoading || picksLoading;
   const isOwnPicks = viewUserId === profile.id;
