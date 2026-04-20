@@ -56,40 +56,40 @@ export function PlayerSilhouettesBackground() {
       <OutlineFilter />
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
 
-        {/* Left — Modric running, nearly full height */}
+        {/* Far left — Ronaldo running */}
         <PlayerOutline
-          src="/silhouettes/modric.png"
-          style={{ position: 'absolute', top: '-5%', left: '-6%', height: '95vh', width: 'auto', opacity: 0.22 }}
+          src="/silhouettes/ronaldo.png"
+          style={{ position: 'absolute', top: '-5%', left: '-5%', height: '100vh', width: 'auto', opacity: 0.22 }}
         />
 
-        {/* Right — Van Dijk roaring, nearly full height */}
+        {/* Far right — Van Dijk roaring */}
         <PlayerOutline
           src="/silhouettes/vandijk.png"
-          style={{ position: 'absolute', top: '-5%', right: '-6%', height: '95vh', width: 'auto', opacity: 0.2, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', top: '-5%', right: '-5%', height: '100vh', width: 'auto', opacity: 0.2, transform: 'scaleX(-1)' }}
         />
 
-        {/* Centre-left — Mane */}
+        {/* Centre-left — Modric */}
         <PlayerOutline
-          src="/silhouettes/mane.png"
-          style={{ position: 'absolute', bottom: '-5%', left: '12%', height: '80vh', width: 'auto', opacity: 0.17 }}
+          src="/silhouettes/modric.png"
+          style={{ position: 'absolute', bottom: '-5%', left: '8%', height: '85vh', width: 'auto', opacity: 0.18 }}
         />
 
         {/* Centre-right — Silva */}
         <PlayerOutline
           src="/silhouettes/silva.png"
-          style={{ position: 'absolute', bottom: '-5%', right: '12%', height: '80vh', width: 'auto', opacity: 0.17, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', bottom: '-5%', right: '8%', height: '85vh', width: 'auto', opacity: 0.18, transform: 'scaleX(-1)' }}
         />
 
-        {/* Far left bottom — Kane */}
+        {/* Mid-left — Kane */}
         <PlayerOutline
           src="/silhouettes/kane.png"
-          style={{ position: 'absolute', bottom: '-8%', left: '-2%', height: '70vh', width: 'auto', opacity: 0.15 }}
+          style={{ position: 'absolute', top: '10%', left: '28%', height: '75vh', width: 'auto', opacity: 0.14 }}
         />
 
-        {/* Far right bottom — Rodri */}
+        {/* Mid-right — Neymar */}
         <PlayerOutline
-          src="/silhouettes/rodri.png"
-          style={{ position: 'absolute', bottom: '-6%', right: '-2%', height: '65vh', width: 'auto', opacity: 0.15, transform: 'scaleX(-1)' }}
+          src="/silhouettes/neymar.png"
+          style={{ position: 'absolute', top: '10%', right: '28%', height: '75vh', width: 'auto', opacity: 0.14, transform: 'scaleX(-1)' }}
         />
 
       </div>
