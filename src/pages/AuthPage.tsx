@@ -13,7 +13,6 @@ export function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [inviteCode, setInviteCode] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -32,14 +31,9 @@ export function AuthPage() {
 
     setBusy(true);
     if (mode === 'signup') {
-      // Store invite code so LeaguesPage can auto-join after sign-up
-      if (inviteCode.trim()) {
-        localStorage.setItem('pending_invite', inviteCode.trim().toUpperCase());
-      }
       const { error: err } = await signUp(email, password, username, turnstileToken ?? '');
       if (err) {
         setError(err);
-        localStorage.removeItem('pending_invite');
         turnstileRef.current?.reset();
         setTurnstileToken(null);
       }
@@ -159,21 +153,6 @@ export function AuthPage() {
             />
           </div>
 
-          {mode === 'signup' && (
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-display font-700 tracking-widest uppercase text-navy-300">
-                Invite Code <span className="text-navy-500 normal-case font-400">(optional)</span>
-              </label>
-              <input
-                type="text"
-                value={inviteCode}
-                onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
-                maxLength={10}
-                placeholder="e.g. BCF887"
-                className="bg-navy-900 border border-navy-600 px-3 py-2.5 text-sm text-white placeholder-navy-500 font-display tracking-widest uppercase focus:outline-none focus:border-gold-500 transition-colors"
-              />
-            </div>
-          )}
 
           {/* Turnstile — only on sign-up */}
           {mode === 'signup' && TURNSTILE_SITE_KEY && (
