@@ -67,11 +67,6 @@ export function AuthPage() {
 
       {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">
-        <div className="border-2 border-gold-500 px-4 py-2 flex flex-col items-center">
-          <span className="font-display font-800 text-gold-400 text-2xl leading-none tracking-widest">FIFA</span>
-          <div className="h-px w-full bg-gold-500/50 my-1" />
-          <span className="font-display font-600 text-gold-500 text-xs leading-none tracking-widest">2026</span>
-        </div>
         <h1 className="font-display font-800 text-3xl tracking-wide text-white uppercase text-center">
           World Cup Bracket Predictions
         </h1>
