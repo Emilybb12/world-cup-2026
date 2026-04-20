@@ -43,17 +43,17 @@ export function useLeague(leagueId: string | null, userId: string | null) {
 
       setLeague(leagueRes.data as League | null);
 
-      const rawMembers = (membersRes.data ?? []) as Array<{
+      const rawMembers = (membersRes.data ?? []) as unknown as Array<{
         league_id: string;
         user_id: string;
         joined_at: string;
-        profiles: { username: string } | null;
+        profiles: { username: string } | { username: string }[] | null;
       }>;
       setMembers(
         rawMembers.map((m) => ({
           league_id: m.league_id,
           user_id: m.user_id,
-          username: m.profiles?.username ?? 'Unknown',
+          username: (Array.isArray(m.profiles) ? m.profiles[0]?.username : m.profiles?.username) ?? 'Unknown',
           joined_at: m.joined_at,
         }))
       );
