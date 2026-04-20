@@ -190,7 +190,7 @@ export function MatchesTab({ matches, hasCreds, loading }: Props) {
   return (
     <div>
       <div className="mb-8">
-        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">Matches</h2>
+        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">Live Scores</h2>
         <p className="text-sm text-navy-200 tracking-wider">Live scores · Kickoff times · Results</p>
       </div>
 

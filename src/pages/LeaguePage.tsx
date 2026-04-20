@@ -17,7 +17,7 @@ const TABS: { id: Tab; label: string; step?: string }[] = [
   { id: 'groups',      label: 'Group Stage', step: '1' },
   { id: 'bracket',     label: 'Bracket',     step: '2' },
   { id: 'leaderboard', label: 'Leaderboard'             },
-  { id: 'matches',     label: 'Matches'                 },
+  { id: 'matches',     label: 'Live Scores'              },
 ];
 
 interface Props {
