@@ -4,6 +4,7 @@ import { useAuth } from './hooks/useAuth';
 import { AuthPage } from './pages/AuthPage';
 import { LeaguesPage } from './pages/LeaguesPage';
 import { LeaguePage } from './pages/LeaguePage';
+import { PlayerSilhouettesBackground } from './components/PlayerSilhouettes';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -61,7 +62,13 @@ function LeagueRoute() {
 
 export function App() {
   return (
-    <Routes>
+    <>
+      {/* Global fixed background — shows on all pages */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <PlayerSilhouettesBackground />
+      </div>
+
+      <Routes>
       <Route path="/auth" element={<AuthGuard />} />
       <Route
         path="/leagues"
@@ -81,5 +88,6 @@ export function App() {
       />
       <Route path="*" element={<Navigate to="/leagues" replace />} />
     </Routes>
+    </>
   );
 }

@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { signIn, signUp } from '../hooks/useAuth';
-import { PlayerSilhouettesBackground } from '../components/PlayerSilhouettes';
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
@@ -57,9 +56,6 @@ export function AuthPage() {
 
       {/* Gold top bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
-
-      {/* Player silhouettes */}
-      <PlayerSilhouettesBackground />
 
       {/* Dark radial vignette behind centre content */}
       <div
