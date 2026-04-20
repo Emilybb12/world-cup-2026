@@ -41,7 +41,10 @@ function MemberCard({ picks, isYou }: { picks: UserPicks; isYou: boolean }) {
   const sfDone  = Object.values(kp.sf).filter(Boolean).length;
 
   return (
-    <div className={`border flex-1 min-w-[220px] ${isYou ? 'border-gold-500/60' : 'border-navy-600'} bg-navy-800`}>
+    <div
+      className={`border flex-1 min-w-[220px] bg-navy-800 relative corner-brackets transition-all ${isYou ? 'border-gold-500' : 'border-navy-600'}`}
+      style={isYou ? { boxShadow: '0 0 30px rgba(201, 168, 50, 0.1)' } : undefined}
+    >
       <div className="px-6 py-5 border-b border-navy-700 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 min-w-0">
           {isYou && <span className="shrink-0 text-[10px] font-display font-800 text-gold-500 border border-gold-500/50 px-1.5 py-0.5 tracking-widest uppercase">you</span>}

@@ -90,7 +90,14 @@ export function LeaguePage({ profile }: Props) {
       <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
+      <header className="sticky top-0 z-10 border-b border-navy-600 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #080d1a 0%, #0c1228 60%, #0f1632 100%)' }}>
+
+        {/* Diagonal accent stripe */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 right-0 h-full w-64 opacity-[0.06]"
+            style={{ background: 'linear-gradient(135deg, transparent 40%, #c9a832 40%, #c9a832 45%, transparent 45%)' }} />
+        </div>
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
 

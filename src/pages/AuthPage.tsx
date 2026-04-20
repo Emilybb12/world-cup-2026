@@ -58,10 +58,24 @@ export function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
 
       {/* Gold top bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
+
+      {/* Background watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <span className="font-display font-900 text-white/[0.025] leading-none tracking-widest"
+          style={{ fontSize: 'clamp(120px, 30vw, 320px)' }}>
+          2026
+        </span>
+      </div>
+
+      {/* Diagonal accent lines */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-96 h-px bg-gold-500/10 rotate-45 origin-left" style={{ width: '200%' }} />
+        <div className="absolute -bottom-20 -right-20 w-96 h-px bg-gold-500/10 rotate-45 origin-right" style={{ width: '200%' }} />
+      </div>
 
       {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">

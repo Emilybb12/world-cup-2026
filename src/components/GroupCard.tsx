@@ -20,10 +20,15 @@ export function GroupCard({ group, pick, onPick }: Props) {
 
   return (
     <div className={[
-      'border transition-all duration-200',
-      isComplete ? 'border-gold-500' : open ? 'border-star-500' : 'border-navy-600',
-      'bg-navy-800',
-    ].join(' ')}>
+      'border transition-all duration-200 relative corner-brackets',
+      isComplete
+        ? 'border-gold-500 bg-navy-800'
+        : open
+        ? 'border-star-500/70 bg-navy-800'
+        : 'border-navy-600 bg-navy-800 hover:border-navy-500',
+    ].join(' ')}
+    style={isComplete ? { boxShadow: '0 0 20px rgba(201, 168, 50, 0.08)' } : undefined}
+    >
 
       {/* Row — click to toggle */}
       <button

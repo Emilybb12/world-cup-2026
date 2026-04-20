@@ -53,6 +53,14 @@ export function LeaguesPage({ profile }: Props) {
       {/* Gold top bar */}
       <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
+      {/* Background watermark */}
+      <div className="fixed inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+        <span className="font-display font-900 text-white/[0.018] leading-none tracking-widest"
+          style={{ fontSize: 'clamp(100px, 25vw, 280px)' }}>
+          FIFA
+        </span>
+      </div>
+
       <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
         <div className="max-w-screen-sm mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -182,7 +190,10 @@ export function LeaguesPage({ profile }: Props) {
               <button
                 key={league.id}
                 onClick={() => navigate(`/league/${league.id}`)}
-                className="border border-navy-600 bg-navy-800 hover:border-navy-400 hover:bg-navy-750 px-5 py-4 text-left transition-all flex items-center justify-between group"
+                className="corner-brackets border border-navy-600 bg-navy-800 hover:border-gold-500/50 hover:bg-navy-750 px-5 py-4 text-left transition-all flex items-center justify-between group"
+              style={{ boxShadow: 'none' }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 20px rgba(201,168,50,0.07)')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
               >
                 <div>
                   <p className="font-display font-700 text-white tracking-wide">{league.name}</p>

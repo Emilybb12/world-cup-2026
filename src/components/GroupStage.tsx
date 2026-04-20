@@ -18,20 +18,24 @@ export function GroupStage({ groupPicks, onPick }: Props) {
   return (
     <div>
       {/* Header */}
-      <div className="mb-8 flex items-end justify-between">
+      <div className="mb-8 flex items-end justify-between relative">
+        <div className="absolute -top-4 right-0 font-display font-900 text-white/[0.03] text-8xl leading-none tracking-widest pointer-events-none select-none uppercase">
+          Groups
+        </div>
         <div>
+          <p className="text-xs font-display font-700 tracking-widest uppercase text-gold-500 mb-1">Step 1</p>
           <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">
             Group Stage
           </h2>
-          <p className="text-sm text-navy-200 tracking-wider">
-            Click a group to pick 1st, 2nd &amp; wildcard
+          <p className="text-sm text-navy-300 tracking-wider">
+            Pick 1st, 2nd &amp; wildcard for each group
           </p>
         </div>
         <div className="text-right">
-          <p className="font-display font-700 text-4xl text-white">
-            {pct}<span className="text-navy-400 text-2xl">%</span>
+          <p className="font-display font-700 text-5xl text-white leading-none">
+            {pct}<span className="text-navy-500 text-2xl">%</span>
           </p>
-          <p className="text-xs text-navy-300 tracking-widest uppercase">{completed}/{GROUPS.length} Groups</p>
+          <p className="text-xs text-navy-400 tracking-widest uppercase mt-1">{completed}/{GROUPS.length} Groups</p>
         </div>
       </div>
 
