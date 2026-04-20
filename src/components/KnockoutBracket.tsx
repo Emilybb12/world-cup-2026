@@ -111,9 +111,9 @@ export function KnockoutBracket({ groupPicks, wildcardPicks, knockoutPicks, onWi
 
   return (
     <div>
-      <div className="mb-8">
-        <h2 className="font-display font-800 text-4xl tracking-wide text-white uppercase mb-1">Knockout Bracket</h2>
-        <p className="text-sm text-navy-200 tracking-wider">Click a team to advance them to the next round</p>
+      <div className="mb-6 sm:mb-8">
+        <h2 className="font-display font-800 text-2xl sm:text-4xl tracking-wide text-white uppercase mb-1">Knockout Bracket</h2>
+        <p className="text-xs sm:text-sm text-navy-200 tracking-wider">Tap a team to advance them</p>
       </div>
 
       <WildcardPicker groupPicks={groupPicks} wildcardPicks={wildcardPicks} onChange={onWildcardChange} />

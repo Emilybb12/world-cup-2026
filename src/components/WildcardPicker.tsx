@@ -47,22 +47,22 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
   const isComplete = filledCount === 8;
 
   return (
-    <div className="mb-10 border border-navy-600 bg-navy-800 p-6">
+    <div className="mb-10 border border-navy-600 bg-navy-800 p-4 sm:p-6">
       <div className="flex items-end justify-between mb-2">
         <div>
-          <h3 className="font-display font-800 text-2xl tracking-wide text-white uppercase mb-1">
+          <h3 className="font-display font-800 text-lg sm:text-2xl tracking-wide text-white uppercase mb-1">
             Wildcard Matchups
           </h3>
           <p className="text-xs text-navy-200 tracking-wider">
-            Pick which 3rd-place team faces each group winner in the Round of 32
+            Pick which 3rd-place team faces each group winner
           </p>
         </div>
-        <p className={`font-display font-700 text-3xl shrink-0 ${isComplete ? 'text-gold-400' : 'text-navy-400'}`}>
+        <p className={`font-display font-700 text-2xl sm:text-3xl shrink-0 ${isComplete ? 'text-gold-400' : 'text-navy-400'}`}>
           {filledCount}<span className="text-navy-500">/8</span>
         </p>
       </div>
 
-      <div className="mt-5 flex flex-col gap-2">
+      <div className="mt-4 flex flex-col gap-2">
         {WC_SLOTS.map(({ wcIndex, opponentGroup }) => {
           const groupWinner = groupPicks[opponentGroup]?.first ?? null;
           const selectedTeam = wildcardPicks[wcIndex] || null;
@@ -71,29 +71,29 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
           );
 
           return (
-            <div key={wcIndex} className="flex items-center gap-3 border border-navy-700 bg-navy-850 px-4 py-3">
-              {/* Group winner side */}
-              <div className="flex items-center gap-2 w-36 shrink-0">
-                <span className="text-[10px] font-display font-700 tracking-widest uppercase text-navy-400">
-                  Group {opponentGroup}
+            <div key={wcIndex} className="border border-navy-700 bg-navy-850 px-3 py-2.5 sm:px-4 sm:py-3">
+              {/* Group winner label */}
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <span className="text-[10px] font-display font-700 tracking-widest uppercase text-navy-400 shrink-0">
+                  Grp {opponentGroup}
                 </span>
+                <span className="text-[10px] font-display font-700 tracking-widest text-navy-600">VS</span>
                 {groupWinner ? (
-                  <span className="font-display font-700 text-xs text-white truncate">
+                  <span className="font-display font-600 text-xs text-white truncate">
                     {TEAM_FLAGS[groupWinner] ?? ''} {groupWinner}
                   </span>
                 ) : (
                   <span className="text-xs text-navy-600 font-display">TBD</span>
                 )}
+                {selectedTeam && (
+                  <span className="ml-auto text-[10px] font-display font-700 tracking-widest text-gold-500 shrink-0">✓</span>
+                )}
               </div>
-
-              {/* VS */}
-              <span className="text-[10px] font-display font-700 tracking-widest text-navy-500 shrink-0">VS</span>
-
-              {/* Wildcard dropdown */}
+              {/* Dropdown on its own line — full width */}
               <select
                 value={selectedTeam ?? ''}
                 onChange={(e) => selectForSlot(wcIndex, e.target.value || null)}
-                className="flex-1 bg-navy-900 border border-navy-600 text-white text-xs font-display px-3 py-2 focus:outline-none focus:border-gold-500 transition-colors"
+                className="w-full bg-navy-900 border border-navy-600 text-white text-xs font-display px-2 py-2 focus:outline-none focus:border-gold-500 transition-colors"
               >
                 <option value="">— Pick 3rd-place team —</option>
                 {availableTeams.map((team) => (
@@ -102,10 +102,6 @@ export function WildcardPicker({ groupPicks, wildcardPicks, onChange }: Props) {
                   </option>
                 ))}
               </select>
-
-              {selectedTeam && (
-                <span className="text-[10px] font-display font-700 tracking-widest text-gold-500 shrink-0">SET</span>
-              )}
             </div>
           );
         })}
