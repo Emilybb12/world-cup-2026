@@ -1,4 +1,3 @@
-export type Player = 'em' | 'ro';
 export type RoundKey = 'r32' | 'r16' | 'qf' | 'sf' | 'final';
 
 export interface Group {
@@ -23,8 +22,10 @@ export interface KnockoutPicks {
   final: string | null;
 }
 
-export interface PlayerPicks {
-  player: Player;
+export interface UserPicks {
+  user_id: string;
+  league_id: string;
+  username: string;
   group_picks: GroupPicks;
   wildcard_picks: string[]; // 8 teams chosen from 12 third-place finishers
   knockout_picks: KnockoutPicks;
@@ -41,4 +42,26 @@ export interface BracketMatch {
   id: number;
   homeSource: SlotSource;
   awaySource: SlotSource;
+}
+
+// Auth / league types
+export interface Profile {
+  id: string;
+  username: string;
+  created_at: string;
+}
+
+export interface League {
+  id: string;
+  name: string;
+  invite_code: string;
+  created_by: string | null;
+  created_at: string;
+}
+
+export interface LeagueMember {
+  league_id: string;
+  user_id: string;
+  username: string;
+  joined_at: string;
 }

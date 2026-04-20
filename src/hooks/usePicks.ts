@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
-import type { Player, PlayerPicks, GroupPicks, KnockoutPicks } from '../types';
+import type { UserPicks, GroupPicks, KnockoutPicks } from '../types';
 
 const DEFAULT_KNOCKOUT: KnockoutPicks = {
   r32: {},
@@ -10,139 +10,133 @@ const DEFAULT_KNOCKOUT: KnockoutPicks = {
   final: null,
 };
 
-function makeDefault(player: Player): PlayerPicks {
+function makeDefault(userId: string, leagueId: string, username: string): UserPicks {
   return {
-    player,
+    user_id: userId,
+    league_id: leagueId,
+    username,
     group_picks: {},
     wildcard_picks: [],
     knockout_picks: DEFAULT_KNOCKOUT,
   };
 }
 
-export const ALL_PLAYERS: Player[] = ['em', 'ro'];
+// All picks for a league, keyed by user_id
+export type AllPicks = Record<string, UserPicks>;
 
-type AllPicks = Record<Player, PlayerPicks>;
-
-export function usePicks() {
-  const [picks, setPicks] = useState<AllPicks>(
-    Object.fromEntries(ALL_PLAYERS.map((p) => [p, makeDefault(p)])) as AllPicks
-  );
-  const [pins, setPins] = useState<Partial<Record<Player, string>>>({});
+export function useLeaguePicks(
+  leagueId: string | null,
+  userId: string | null,
+  members: Array<{ user_id: string; username: string }>
+) {
+  const [picks, setPicks] = useState<AllPicks>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Debounce timer refs per player
   const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
-  // Load both players on mount
+  // Load picks whenever league / members change
   useEffect(() => {
-    async function load() {
-      const { data, error } = await supabase
-        .from('player_picks')
-        .select('*')
-        .in('player', ALL_PLAYERS);
+    if (!leagueId || members.length === 0) { setLoading(false); return; }
 
-      if (error) {
-        setError(error.message);
-      } else {
-        const next: AllPicks = Object.fromEntries(
-          ALL_PLAYERS.map((p) => [p, makeDefault(p)])
-        ) as AllPicks;
-        const newPins: Partial<Record<Player, string>> = {};
-        for (const row of data ?? []) {
-          const p = row.player as Player;
-          next[p] = {
-            player: p,
-            group_picks: (row.group_picks ?? {}) as GroupPicks,
-            wildcard_picks: (row.wildcard_picks ?? []) as string[],
-            knockout_picks: {
-              ...DEFAULT_KNOCKOUT,
-              ...((row.knockout_picks ?? {}) as Partial<KnockoutPicks>),
-            },
-            updated_at: row.updated_at,
-          };
-          if (row.pin) newPins[p] = row.pin as string;
-        }
-        setPicks(next);
-        setPins(newPins);
+    async function load() {
+      setLoading(true);
+      const { data, error: err } = await supabase
+        .from('picks')
+        .select('*')
+        .eq('league_id', leagueId);
+
+      if (err) { setError(err.message); setLoading(false); return; }
+
+      const next: AllPicks = {};
+      for (const m of members) {
+        next[m.user_id] = makeDefault(m.user_id, leagueId!, m.username);
       }
+      for (const row of data ?? []) {
+        const uid = row.user_id as string;
+        const member = members.find((m) => m.user_id === uid);
+        if (!member) continue;
+        next[uid] = {
+          user_id: uid,
+          league_id: leagueId!,
+          username: member.username,
+          group_picks: (row.group_picks ?? {}) as GroupPicks,
+          wildcard_picks: (row.wildcard_picks ?? []) as string[],
+          knockout_picks: { ...DEFAULT_KNOCKOUT, ...((row.knockout_picks ?? {}) as Partial<KnockoutPicks>) },
+          updated_at: row.updated_at as string,
+        };
+      }
+      setPicks(next);
       setLoading(false);
     }
+
     load();
-  }, []);
+  }, [leagueId, members]);
 
   // Real-time subscription
   useEffect(() => {
+    if (!leagueId) return;
+
     const channel = supabase
-      .channel('player_picks_changes')
+      .channel(`picks:league:${leagueId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'player_picks' },
+        { event: '*', schema: 'public', table: 'picks', filter: `league_id=eq.${leagueId}` },
         (payload) => {
           const row = payload.new as Record<string, unknown>;
-          if (!row?.player) return;
-          const p = row.player as Player;
-          setPicks((prev) => ({
-            ...prev,
-            [p]: {
-              player: p,
-              group_picks: (row.group_picks ?? {}) as GroupPicks,
-              wildcard_picks: (row.wildcard_picks ?? []) as string[],
-              knockout_picks: {
-                ...DEFAULT_KNOCKOUT,
-                ...((row.knockout_picks ?? {}) as Partial<KnockoutPicks>),
+          if (!row?.user_id) return;
+          const uid = row.user_id as string;
+          setPicks((prev) => {
+            const existing = prev[uid];
+            if (!existing) return prev;
+            return {
+              ...prev,
+              [uid]: {
+                ...existing,
+                group_picks: (row.group_picks ?? {}) as GroupPicks,
+                wildcard_picks: (row.wildcard_picks ?? []) as string[],
+                knockout_picks: { ...DEFAULT_KNOCKOUT, ...((row.knockout_picks ?? {}) as Partial<KnockoutPicks>) },
+                updated_at: row.updated_at as string,
               },
-              updated_at: row.updated_at as string,
-            },
-          }));
+            };
+          });
         }
       )
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+    return () => { supabase.removeChannel(channel); };
+  }, [leagueId]);
 
-  const savePin = useCallback(async (player: Player, pin: string) => {
-    const { error } = await supabase
-      .from('player_picks')
-      .update({ pin })
-      .eq('player', player);
-    if (error) setError(error.message);
-    else setPins((prev) => ({ ...prev, [player]: pin }));
-  }, []);
-
-  const savePlayer = useCallback(async (updated: PlayerPicks) => {
-    const { error } = await supabase.from('player_picks').upsert(
+  const saveUser = useCallback(async (updated: UserPicks) => {
+    const { error: err } = await supabase.from('picks').upsert(
       {
-        player: updated.player,
+        user_id: updated.user_id,
+        league_id: updated.league_id,
         group_picks: updated.group_picks,
         wildcard_picks: updated.wildcard_picks,
         knockout_picks: updated.knockout_picks,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'player' }
+      { onConflict: 'user_id,league_id' }
     );
-    if (error) setError(error.message);
+    if (err) setError(err.message);
   }, []);
 
   const debouncedSave = useCallback(
-    (updated: PlayerPicks) => {
-      const key = updated.player;
+    (updated: UserPicks) => {
+      const key = `${updated.user_id}:${updated.league_id}`;
       clearTimeout(saveTimers.current[key]);
-      saveTimers.current[key] = setTimeout(() => savePlayer(updated), 600);
+      saveTimers.current[key] = setTimeout(() => saveUser(updated), 600);
     },
-    [savePlayer]
+    [saveUser]
   );
 
   const updateGroupPick = useCallback(
-    (player: Player, groupId: string, position: 'first' | 'second' | 'third', team: string | null) => {
+    (groupId: string, position: 'first' | 'second' | 'third', team: string | null) => {
+      if (!userId || !leagueId) return;
       setPicks((prev) => {
-        const playerPicks = prev[player];
-        const groupPick = playerPicks.group_picks[groupId] ?? { first: null, second: null, third: null };
-
-        // If selecting a team that's already placed elsewhere in this group, clear that slot
+        const mine = prev[userId];
+        if (!mine) return prev;
+        const groupPick = mine.group_picks[groupId] ?? { first: null, second: null, third: null };
         const newGroupPick = { ...groupPick };
         if (team) {
           if (newGroupPick.first === team && position !== 'first') newGroupPick.first = null;
@@ -150,45 +144,42 @@ export function usePicks() {
           if (newGroupPick.third === team && position !== 'third') newGroupPick.third = null;
         }
         newGroupPick[position] = team;
-
-        const updated: PlayerPicks = {
-          ...playerPicks,
-          group_picks: { ...playerPicks.group_picks, [groupId]: newGroupPick },
-          // Clear wildcard + knockout picks when group picks change
+        const updated: UserPicks = {
+          ...mine,
+          group_picks: { ...mine.group_picks, [groupId]: newGroupPick },
           wildcard_picks: [],
           knockout_picks: DEFAULT_KNOCKOUT,
         };
         debouncedSave(updated);
-        return { ...prev, [player]: updated };
+        return { ...prev, [userId]: updated };
       });
     },
-    [debouncedSave]
+    [userId, leagueId, debouncedSave]
   );
 
   const updateWildcardPicks = useCallback(
-    (player: Player, wildcards: string[]) => {
+    (wildcards: string[]) => {
+      if (!userId || !leagueId) return;
       setPicks((prev) => {
-        const updated: PlayerPicks = {
-          ...prev[player],
-          wildcard_picks: wildcards,
-          knockout_picks: DEFAULT_KNOCKOUT, // reset bracket when wildcards change
-        };
+        const mine = prev[userId];
+        if (!mine) return prev;
+        const updated: UserPicks = { ...mine, wildcard_picks: wildcards, knockout_picks: DEFAULT_KNOCKOUT };
         debouncedSave(updated);
-        return { ...prev, [player]: updated };
+        return { ...prev, [userId]: updated };
       });
     },
-    [debouncedSave]
+    [userId, leagueId, debouncedSave]
   );
 
   const updateKnockoutPick = useCallback(
-    (player: Player, round: keyof KnockoutPicks, matchIndex: number, winner: string | null) => {
+    (round: keyof KnockoutPicks, matchIndex: number, winner: string | null) => {
+      if (!userId || !leagueId) return;
       setPicks((prev) => {
-        const kp = prev[player].knockout_picks;
-
-        // When a pick changes, clear all downstream picks
+        const mine = prev[userId];
+        if (!mine) return prev;
+        const kp = mine.knockout_picks;
         const roundOrder: Array<keyof KnockoutPicks> = ['r32', 'r16', 'qf', 'sf', 'final'];
         const roundIdx = roundOrder.indexOf(round);
-
         const newKp: KnockoutPicks = { ...kp };
 
         if (round === 'final') {
@@ -198,39 +189,34 @@ export function usePicks() {
             ...(kp[round as Exclude<keyof KnockoutPicks, 'final'>] as Record<number, string | null>),
             [matchIndex]: winner,
           };
-          // Clear subsequent rounds
           for (let i = roundIdx + 1; i < roundOrder.length; i++) {
             const laterRound = roundOrder[i];
             if (laterRound === 'final') {
               newKp.final = null;
             } else {
-              // Only clear matches that could be affected by this match's winner changing
-              // For simplicity, determine affected downstream matches
-              const affectedMatches = getDownstreamMatches(round as Exclude<keyof KnockoutPicks, 'final'>, matchIndex, laterRound as Exclude<keyof KnockoutPicks, 'final'>);
+              const affected = getDownstreamMatches(
+                round as Exclude<keyof KnockoutPicks, 'final'>,
+                matchIndex,
+                laterRound as Exclude<keyof KnockoutPicks, 'final'>
+              );
               const existing = { ...(newKp[laterRound as Exclude<keyof KnockoutPicks, 'final'>] as Record<number, string | null>) };
-              for (const mi of affectedMatches) {
-                delete existing[mi];
-              }
+              for (const mi of affected) delete existing[mi];
               newKp[laterRound as Exclude<keyof KnockoutPicks, 'final'>] = existing;
             }
           }
         }
 
-        const updated: PlayerPicks = { ...prev[player], knockout_picks: newKp };
+        const updated: UserPicks = { ...mine, knockout_picks: newKp };
         debouncedSave(updated);
-        return { ...prev, [player]: updated };
+        return { ...prev, [userId]: updated };
       });
     },
-    [debouncedSave]
+    [userId, leagueId, debouncedSave]
   );
 
-  return { picks, pins, loading, error, savePin, updateGroupPick, updateWildcardPicks, updateKnockoutPick };
+  return { picks, loading, error, updateGroupPick, updateWildcardPicks, updateKnockoutPick };
 }
 
-/**
- * Given a match in `fromRound` at `fromIndex`, returns which match indices
- * in `toRound` would be populated by its winner.
- */
 function getDownstreamMatches(
   fromRound: Exclude<keyof KnockoutPicks, 'final'>,
   fromIndex: number,
@@ -240,8 +226,6 @@ function getDownstreamMatches(
   const fromIdx = roundOrder.indexOf(fromRound);
   const toIdx = roundOrder.indexOf(toRound);
   if (toIdx <= fromIdx) return [];
-
-  // Each round halves: match i in round N feeds into match floor(i/2) in round N+1
   let indices = [fromIndex];
   for (let r = fromIdx; r < toIdx; r++) {
     indices = indices.map((i) => Math.floor(i / 2));
