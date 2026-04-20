@@ -98,39 +98,33 @@ export function LeaguePage({ profile }: Props) {
           <div className="absolute top-0 right-0 h-full w-64 opacity-[0.06]"
             style={{ background: 'linear-gradient(135deg, transparent 40%, #c9a832 40%, #c9a832 45%, transparent 45%)' }} />
         </div>
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between py-4">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="flex items-center justify-between py-3 sm:py-4">
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               <button
                 onClick={() => navigate('/leagues')}
-                className="text-navy-400 hover:text-white transition-colors text-sm font-display tracking-widest"
-                title="All leagues"
+                className="text-navy-400 hover:text-white transition-colors text-sm font-display tracking-widest shrink-0"
               >
-                Back
+                ←
               </button>
-              <div className="border-2 border-gold-500 px-2 py-1 flex flex-col items-center">
-                <span className="font-display font-800 text-gold-400 text-lg leading-none tracking-widest">FIFA</span>
-                <div className="h-px w-full bg-gold-500/50 my-0.5" />
-                <span className="font-display font-600 text-gold-500 text-[8px] leading-none tracking-widest">2026</span>
-              </div>
-              <div>
-                <p className="font-display text-xs font-600 tracking-widest text-gold-500 uppercase">
+              <div className="min-w-0">
+                <p className="font-display text-[10px] sm:text-xs font-600 tracking-widest text-gold-500 uppercase truncate">
                   {league.name}
                 </p>
-                <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase leading-none">
+                <h1 className="font-display text-base sm:text-2xl font-800 tracking-wide text-white uppercase leading-none truncate">
                   World Cup 2026
                 </h1>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               {/* Member switcher */}
               {members.length > 1 && (
                 <select
                   value={viewUserId}
                   onChange={(e) => setViewUserId(e.target.value)}
-                  className="bg-navy-800 border border-navy-600 text-white text-xs font-display tracking-widest uppercase px-3 py-2 focus:outline-none focus:border-gold-500"
+                  className="bg-navy-800 border border-navy-600 text-white text-xs font-display tracking-widest uppercase px-2 sm:px-3 py-2 focus:outline-none focus:border-gold-500 max-w-[100px] sm:max-w-none"
                 >
                   {members.map((m) => (
                     <option key={m.user_id} value={m.user_id}>
@@ -140,24 +134,24 @@ export function LeaguePage({ profile }: Props) {
                 </select>
               )}
 
-              {/* Invite code */}
+              {/* Invite code — desktop only */}
               <button
                 className="hidden sm:flex items-center gap-2 border border-navy-600 px-3 py-2 cursor-pointer hover:border-gold-500 transition-colors group"
                 title="Click to copy invite code"
                 onClick={copyInvite}
               >
                 <span className="text-xs font-display tracking-widest uppercase text-navy-400 group-hover:text-gold-400 transition-colors">
-                  {copied ? '✓ Copied!' : 'Invite code:'}
+                  {copied ? '✓ Copied!' : 'Code:'}
                 </span>
                 <span className="text-xs font-display font-800 tracking-widest text-gold-400">{league.invite_code}</span>
               </button>
 
               <button
                 onClick={signOut}
-                className="text-xs font-display tracking-widest uppercase text-navy-200 hover:text-white transition-colors border border-navy-600 px-3 py-2 hover:border-navy-400"
-                title="Sign out"
+                className="text-xs font-display tracking-widest uppercase text-navy-200 hover:text-white transition-colors border border-navy-600 px-2 sm:px-3 py-2 hover:border-navy-400"
               >
-                Sign out
+                <span className="hidden sm:inline">Sign out</span>
+                <span className="sm:hidden">Exit</span>
               </button>
             </div>
           </div>
@@ -197,14 +191,14 @@ export function LeaguePage({ profile }: Props) {
       <ScoreTicker matches={todayMatches} />
 
       {error && (
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 pt-6">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-12 pt-4 sm:pt-6">
           <p className="text-xs text-red-400 border border-red-900/50 bg-red-950/30 px-4 py-3">
             Error: {error}
           </p>
         </div>
       )}
 
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-8 flex gap-8">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-8 flex gap-8">
 
         {/* Sidebar nav (desktop) */}
         <aside className="hidden md:flex flex-col w-48 shrink-0">

@@ -54,19 +54,14 @@ export function LeaguesPage({ profile }: Props) {
       <div className="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
       <header className="sticky top-0 z-10 bg-navy-900/95 backdrop-blur border-b border-navy-600">
-        <div className="max-w-screen-sm mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="border-2 border-gold-500 px-2 py-1 flex flex-col items-center">
-              <span className="font-display font-800 text-gold-400 text-sm leading-none tracking-widest">FIFA</span>
-              <div className="h-px w-full bg-gold-500/50 my-0.5" />
-              <span className="font-display font-600 text-gold-500 text-[7px] leading-none tracking-widest">2026</span>
-            </div>
-            <h1 className="font-display font-800 text-xl tracking-wide text-white uppercase leading-none">
+        <div className="max-w-screen-sm mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <h1 className="font-display font-800 text-lg sm:text-xl tracking-wide text-white uppercase leading-none">
               My Leagues
             </h1>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-navy-400 font-display tracking-widest uppercase">{profile.username}</span>
+            <span className="hidden sm:block text-xs text-navy-400 font-display tracking-widest uppercase">{profile.username}</span>
             <button
               onClick={signOut}
               className="text-xs font-display tracking-widest uppercase text-navy-200 hover:text-white transition-colors border border-navy-600 px-3 py-2 hover:border-navy-400"
@@ -77,7 +72,7 @@ export function LeaguesPage({ profile }: Props) {
         </div>
       </header>
 
-      <main className="max-w-screen-sm mx-auto px-6 py-10">
+      <main className="max-w-screen-sm mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         {/* Action buttons */}
         <div className="flex gap-3 mb-8">

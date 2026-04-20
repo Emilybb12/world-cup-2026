@@ -67,7 +67,7 @@ export function AuthPage() {
 
       {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">
-        <h1 className="font-display font-800 text-3xl tracking-wide text-white uppercase text-center">
+        <h1 className="font-display font-800 text-xl sm:text-3xl tracking-wide text-white uppercase text-center">
           World Cup Bracket Predictions
         </h1>
         <p className="text-sm text-navy-300 tracking-wide text-center">
