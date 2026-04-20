@@ -11,14 +11,15 @@ import { MatchesTab } from '../components/MatchesTab';
 import { ScoreTicker } from '../components/ScoreTicker';
 import { signOut } from '../hooks/useAuth';
 
-type Tab = 'leaderboard' | 'matches' | 'groups' | 'bracket';
+type Tab = 'leaderboard' | 'matches' | 'picks';
 
 const TABS: { id: Tab; label: string; step?: string }[] = [
-  { id: 'groups',      label: 'Group Stage', step: '1' },
-  { id: 'bracket',     label: 'Bracket',     step: '2' },
-  { id: 'leaderboard', label: 'Leaderboard'             },
-  { id: 'matches',     label: 'Live Scores'              },
+  { id: 'picks',       label: 'My Picks'    },
+  { id: 'leaderboard', label: 'Leaderboard' },
+  { id: 'matches',     label: 'Live Scores' },
 ];
+
+type PicksSubTab = 'groups' | 'bracket';
 
 interface Props {
   profile: Profile;
@@ -27,7 +28,8 @@ interface Props {
 export function LeaguePage({ profile }: Props) {
   const { id: leagueId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<Tab>('groups');
+  const [tab, setTab] = useState<Tab>('picks');
+  const [picksSubTab, setPicksSubTab] = useState<PicksSubTab>('groups');
   const [viewUserId, setViewUserId] = useState<string>(profile.id);
   const [copied, setCopied] = useState(false);
 
@@ -239,25 +241,53 @@ export function LeaguePage({ profile }: Props) {
 
         {/* Main content */}
         <main className="flex-1 min-w-0">
-          <div className={isOwnPicks ? '' : 'pointer-events-none opacity-50'}>
-            {tab === 'groups' && (
-              <GroupStage
-                groupPicks={safePicks.group_picks}
-                onPick={(groupId, pos, team) => updateGroupPick(groupId, pos, team)}
-              />
-            )}
-            {tab === 'bracket' && (
-              <KnockoutBracket
-                groupPicks={safePicks.group_picks}
-                wildcardPicks={safePicks.wildcard_picks}
-                knockoutPicks={safePicks.knockout_picks}
-                onWildcardChange={(wc) => updateWildcardPicks(wc)}
-                onKnockoutPick={(round, mi, winner) =>
-                  updateKnockoutPick(round as keyof KnockoutPicks, mi, winner)
-                }
-              />
-            )}
-          </div>
+          {tab === 'picks' && (
+            <div>
+              {/* Sub-tabs */}
+              <div className="flex border-b border-navy-700 mb-8">
+                {([
+                  { id: 'groups' as PicksSubTab,  label: 'Group Stage', step: '1' },
+                  { id: 'bracket' as PicksSubTab, label: 'Knockout Bracket', step: '2' },
+                ]).map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => setPicksSubTab(s.id)}
+                    className={[
+                      'flex items-center gap-2 px-5 py-3 font-display font-700 text-xs tracking-widest uppercase border-b-2 transition-all duration-150',
+                      picksSubTab === s.id
+                        ? 'border-gold-500 text-gold-400'
+                        : 'border-transparent text-navy-400 hover:text-white',
+                    ].join(' ')}
+                  >
+                    <span className={`w-5 h-5 rounded-full text-[9px] flex items-center justify-center font-800 ${picksSubTab === s.id ? 'bg-gold-500 text-navy-900' : 'bg-navy-700 text-navy-400'}`}>
+                      {s.step}
+                    </span>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className={isOwnPicks ? '' : 'pointer-events-none opacity-50'}>
+                {picksSubTab === 'groups' && (
+                  <GroupStage
+                    groupPicks={safePicks.group_picks}
+                    onPick={(groupId, pos, team) => updateGroupPick(groupId, pos, team)}
+                  />
+                )}
+                {picksSubTab === 'bracket' && (
+                  <KnockoutBracket
+                    groupPicks={safePicks.group_picks}
+                    wildcardPicks={safePicks.wildcard_picks}
+                    knockoutPicks={safePicks.knockout_picks}
+                    onWildcardChange={(wc) => updateWildcardPicks(wc)}
+                    onKnockoutPick={(round, mi, winner) =>
+                      updateKnockoutPick(round as keyof KnockoutPicks, mi, winner)
+                    }
+                  />
+                )}
+              </div>
+            </div>
+          )}
           {tab === 'leaderboard' && (
             <LeagueLeaderboard
               allPicks={picks}
