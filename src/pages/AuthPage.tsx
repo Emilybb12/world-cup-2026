@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { signIn, signUp } from '../hooks/useAuth';
+import { PlayerSilhouettesBackground } from '../components/PlayerSilhouettes';
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
@@ -70,6 +71,9 @@ export function AuthPage() {
           2026
         </span>
       </div>
+
+      {/* Player silhouettes */}
+      <PlayerSilhouettesBackground />
 
       {/* Diagonal accent lines */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
