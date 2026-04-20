@@ -67,6 +67,14 @@ export function AuthPage() {
       {/* Player silhouettes */}
       <PlayerSilhouettesBackground />
 
+      {/* Dark radial vignette behind centre content */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 55% 70% at 50% 50%, rgba(8,14,44,0.82) 0%, rgba(8,14,44,0.5) 55%, transparent 100%)',
+        }}
+      />
+
       {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">
         <div className="border-2 border-gold-500 px-4 py-2 flex flex-col items-center">
@@ -83,7 +91,7 @@ export function AuthPage() {
       </div>
 
       {/* Card */}
-      <div className="w-full max-w-sm border border-navy-600 bg-navy-800">
+      <div className="w-full max-w-sm border border-navy-600 bg-navy-900/90 backdrop-blur-md">
 
         {/* Tabs */}
         <div className="flex border-b border-navy-600">
