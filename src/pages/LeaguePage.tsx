@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { Profile, UserPicks, KnockoutPicks } from '../types';
 import { useLeague } from '../hooks/useLeague';
@@ -29,6 +29,14 @@ export function LeaguePage({ profile }: Props) {
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>('leaderboard');
   const [viewUserId, setViewUserId] = useState<string>(profile.id);
+  const [copied, setCopied] = useState(false);
+
+  const copyInvite = useCallback(() => {
+    navigator.clipboard?.writeText(league?.invite_code ?? '').then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [league]);
 
   const { league, members, loading: leagueLoading } = useLeague(leagueId ?? null, profile.id);
   const { picks, loading: picksLoading, error, updateGroupPick, updateWildcardPicks, updateKnockoutPick } =
@@ -124,14 +132,16 @@ export function LeaguePage({ profile }: Props) {
               )}
 
               {/* Invite code */}
-              <div
-                className="hidden sm:flex items-center gap-2 border border-navy-600 px-3 py-2 cursor-pointer hover:border-navy-400 transition-colors group"
+              <button
+                className="hidden sm:flex items-center gap-2 border border-navy-600 px-3 py-2 cursor-pointer hover:border-gold-500 transition-colors group"
                 title="Click to copy invite code"
-                onClick={() => navigator.clipboard?.writeText(league.invite_code)}
+                onClick={copyInvite}
               >
-                <span className="text-xs font-display tracking-widest uppercase text-navy-400 group-hover:text-navy-200">Invite:</span>
+                <span className="text-xs font-display tracking-widest uppercase text-navy-400 group-hover:text-gold-400 transition-colors">
+                  {copied ? '✓ Copied!' : 'Invite code:'}
+                </span>
                 <span className="text-xs font-display font-800 tracking-widest text-gold-400">{league.invite_code}</span>
-              </div>
+              </button>
 
               <button
                 onClick={signOut}
@@ -210,9 +220,9 @@ export function LeaguePage({ profile }: Props) {
               <p
                 className="font-display font-800 text-gold-400 tracking-widest text-sm cursor-pointer hover:text-gold-300"
                 title="Click to copy"
-                onClick={() => navigator.clipboard?.writeText(league.invite_code)}
+                onClick={copyInvite}
               >
-                {league.invite_code}
+                {copied ? '✓ Copied!' : league.invite_code}
               </p>
               <p className="text-[10px] text-navy-500 mt-1">{members.length} member{members.length !== 1 ? 's' : ''}</p>
             </div>
