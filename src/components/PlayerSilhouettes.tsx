@@ -56,39 +56,58 @@ export function PlayerSilhouettesBackground() {
       <OutlineFilter />
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
 
-        {/* Far left — Ronaldo running */}
+        {/* Far left — Ronaldo: smaller + pushed off-screen on mobile */}
         <PlayerOutline
           src="/silhouettes/ronaldo.png"
-          style={{ position: 'absolute', top: '-5%', left: '-5%', height: '100vh', width: 'auto', opacity: 0.22 }}
+          style={{
+            position: 'absolute',
+            top: '-5%',
+            left: '-8%',
+            height: 'clamp(220px, 55vh, 900px)',
+            width: 'auto',
+            opacity: 0.22,
+          }}
         />
 
-        {/* Far right — Van Dijk roaring */}
+        {/* Far right — Van Dijk: smaller + pushed off-screen on mobile */}
         <PlayerOutline
           src="/silhouettes/vandijk.png"
-          style={{ position: 'absolute', top: '-5%', right: '-5%', height: '100vh', width: 'auto', opacity: 0.2, transform: 'scaleX(-1)' }}
+          style={{
+            position: 'absolute',
+            top: '-5%',
+            right: '-8%',
+            height: 'clamp(220px, 55vh, 900px)',
+            width: 'auto',
+            opacity: 0.2,
+            transform: 'scaleX(-1)',
+          }}
         />
 
-        {/* Centre-left — Modric */}
+        {/* Centre-left — Modric: desktop only */}
         <PlayerOutline
           src="/silhouettes/modric.png"
+          className="hidden sm:block"
           style={{ position: 'absolute', bottom: '-5%', left: '8%', height: '85vh', width: 'auto', opacity: 0.18 }}
         />
 
-        {/* Centre-right — Silva */}
+        {/* Centre-right — Silva: desktop only */}
         <PlayerOutline
           src="/silhouettes/silva.png"
+          className="hidden sm:block"
           style={{ position: 'absolute', bottom: '-5%', right: '8%', height: '85vh', width: 'auto', opacity: 0.18, transform: 'scaleX(-1)' }}
         />
 
-        {/* Mid-left — Kane */}
+        {/* Mid-left — Kane: desktop only */}
         <PlayerOutline
           src="/silhouettes/kane.png"
+          className="hidden sm:block"
           style={{ position: 'absolute', top: '10%', left: '28%', height: '75vh', width: 'auto', opacity: 0.14 }}
         />
 
-        {/* Mid-right — Neymar */}
+        {/* Mid-right — Neymar: desktop only */}
         <PlayerOutline
           src="/silhouettes/neymar.png"
+          className="hidden sm:block"
           style={{ position: 'absolute', top: '10%', right: '28%', height: '75vh', width: 'auto', opacity: 0.14, transform: 'scaleX(-1)' }}
         />
 
