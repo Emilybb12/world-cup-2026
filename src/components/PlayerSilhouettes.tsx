@@ -56,40 +56,40 @@ export function PlayerSilhouettesBackground() {
       <OutlineFilter />
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
 
-        {/* Top-left — Modric running */}
+        {/* Left — Modric running, nearly full height */}
         <PlayerOutline
           src="/silhouettes/modric.png"
-          style={{ position: 'absolute', top: '-8%', left: '-4%', width: '42vw', maxWidth: 520, opacity: 0.22 }}
+          style={{ position: 'absolute', top: '-5%', left: '-6%', height: '95vh', width: 'auto', opacity: 0.22 }}
         />
 
-        {/* Top-right — Van Dijk roaring */}
+        {/* Right — Van Dijk roaring, nearly full height */}
         <PlayerOutline
           src="/silhouettes/vandijk.png"
-          style={{ position: 'absolute', top: '-6%', right: '-4%', width: '38vw', maxWidth: 480, opacity: 0.2, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', top: '-5%', right: '-6%', height: '95vh', width: 'auto', opacity: 0.2, transform: 'scaleX(-1)' }}
         />
 
-        {/* Left middle — Mane running */}
+        {/* Centre-left — Mane */}
         <PlayerOutline
           src="/silhouettes/mane.png"
-          style={{ position: 'absolute', top: '25%', left: '-5%', width: '36vw', maxWidth: 440, opacity: 0.2 }}
+          style={{ position: 'absolute', bottom: '-5%', left: '12%', height: '80vh', width: 'auto', opacity: 0.17 }}
         />
 
-        {/* Right middle — Silva running */}
+        {/* Centre-right — Silva */}
         <PlayerOutline
           src="/silhouettes/silva.png"
-          style={{ position: 'absolute', top: '22%', right: '-5%', width: '36vw', maxWidth: 440, opacity: 0.2, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', bottom: '-5%', right: '12%', height: '80vh', width: 'auto', opacity: 0.17, transform: 'scaleX(-1)' }}
         />
 
-        {/* Bottom-left — Kane celebrating */}
+        {/* Far left bottom — Kane */}
         <PlayerOutline
           src="/silhouettes/kane.png"
-          style={{ position: 'absolute', bottom: '-8%', left: '-3%', width: '38vw', maxWidth: 460, opacity: 0.2 }}
+          style={{ position: 'absolute', bottom: '-8%', left: '-2%', height: '70vh', width: 'auto', opacity: 0.15 }}
         />
 
-        {/* Bottom-right — Rodri fist pump */}
+        {/* Far right bottom — Rodri */}
         <PlayerOutline
           src="/silhouettes/rodri.png"
-          style={{ position: 'absolute', bottom: '-6%', right: '-2%', width: '32vw', maxWidth: 400, opacity: 0.19, transform: 'scaleX(-1)' }}
+          style={{ position: 'absolute', bottom: '-6%', right: '-2%', height: '65vh', width: 'auto', opacity: 0.15, transform: 'scaleX(-1)' }}
         />
 
       </div>
