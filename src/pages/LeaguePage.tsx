@@ -13,11 +13,11 @@ import { signOut } from '../hooks/useAuth';
 
 type Tab = 'leaderboard' | 'matches' | 'groups' | 'bracket';
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'leaderboard', label: 'Leaderboard' },
-  { id: 'matches',     label: 'Matches'     },
-  { id: 'groups',      label: 'Group Stage' },
-  { id: 'bracket',     label: 'Bracket'     },
+const TABS: { id: Tab; label: string; step?: string }[] = [
+  { id: 'groups',      label: 'Group Stage', step: '1' },
+  { id: 'bracket',     label: 'Bracket',     step: '2' },
+  { id: 'leaderboard', label: 'Leaderboard'             },
+  { id: 'matches',     label: 'Matches'                 },
 ];
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
 export function LeaguePage({ profile }: Props) {
   const { id: leagueId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<Tab>('leaderboard');
+  const [tab, setTab] = useState<Tab>('groups');
   const [viewUserId, setViewUserId] = useState<string>(profile.id);
   const [copied, setCopied] = useState(false);
 
@@ -166,12 +166,17 @@ export function LeaguePage({ profile }: Props) {
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={[
-                  'shrink-0 px-4 py-3 font-display font-700 text-xs tracking-widest uppercase border-b-2 transition-all duration-150',
+                  'shrink-0 px-4 py-3 font-display font-700 text-xs tracking-widest uppercase border-b-2 transition-all duration-150 flex items-center gap-1.5',
                   tab === t.id
                     ? 'border-gold-500 text-gold-400'
                     : 'border-transparent text-navy-300 hover:text-white',
                 ].join(' ')}
               >
+                {t.step && (
+                  <span className={`w-4 h-4 rounded-full text-[9px] flex items-center justify-center font-800 shrink-0 ${tab === t.id ? 'bg-gold-500 text-navy-900' : 'bg-navy-700 text-navy-400'}`}>
+                    {t.step}
+                  </span>
+                )}
                 {t.label}
               </button>
             ))}
@@ -206,6 +211,11 @@ export function LeaguePage({ profile }: Props) {
                     : 'border-l-transparent text-navy-300 hover:text-white hover:bg-navy-800',
                 ].join(' ')}
               >
+                {t.step && (
+                  <span className={`w-5 h-5 rounded-full text-[9px] flex items-center justify-center font-800 shrink-0 ${tab === t.id ? 'bg-gold-500 text-navy-900' : 'bg-navy-700 text-navy-400'}`}>
+                    {t.step}
+                  </span>
+                )}
                 {t.label}
               </button>
             ))}
