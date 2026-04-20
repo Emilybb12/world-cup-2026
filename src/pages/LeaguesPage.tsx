@@ -170,7 +170,6 @@ export function LeaguesPage({ profile }: Props) {
           <p className="font-display text-navy-400 tracking-widest uppercase animate-pulse text-sm">Loading…</p>
         ) : leagues.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-4xl mb-4">⚽</p>
             <p className="font-display font-700 text-white uppercase tracking-wide text-lg mb-2">No leagues yet</p>
             <p className="text-sm text-navy-400">Create a league or join one with an invite code.</p>
           </div>

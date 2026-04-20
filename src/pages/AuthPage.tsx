@@ -12,6 +12,7 @@ export function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -30,14 +31,16 @@ export function AuthPage() {
 
     setBusy(true);
     if (mode === 'signup') {
+      // Store invite code so LeaguesPage can auto-join after sign-up
+      if (inviteCode.trim()) {
+        localStorage.setItem('pending_invite', inviteCode.trim().toUpperCase());
+      }
       const { error: err } = await signUp(email, password, username, turnstileToken ?? '');
       if (err) {
         setError(err);
+        localStorage.removeItem('pending_invite');
         turnstileRef.current?.reset();
         setTurnstileToken(null);
-      } else {
-        setInfo('Check your email to confirm your account, then sign in.');
-        setMode('signin');
       }
     } else {
       const { error: err } = await signIn(email, password);
@@ -60,7 +63,7 @@ export function AuthPage() {
       {/* Gold top bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600" />
 
-      {/* FIFA badge */}
+      {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">
         <div className="border-2 border-gold-500 px-4 py-2 flex flex-col items-center">
           <span className="font-display font-800 text-gold-400 text-2xl leading-none tracking-widest">FIFA</span>
@@ -68,7 +71,7 @@ export function AuthPage() {
           <span className="font-display font-600 text-gold-500 text-xs leading-none tracking-widest">2026</span>
         </div>
         <h1 className="font-display font-800 text-3xl tracking-wide text-white uppercase text-center">
-          Bracket Predictions
+          World Cup Bracket Predictions
         </h1>
         <p className="text-sm text-navy-300 tracking-wide text-center">
           Create a league, invite your friends, pick your brackets.
@@ -144,6 +147,22 @@ export function AuthPage() {
             />
           </div>
 
+          {mode === 'signup' && (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-display font-700 tracking-widest uppercase text-navy-300">
+                Invite Code <span className="text-navy-500 normal-case font-400">(optional)</span>
+              </label>
+              <input
+                type="text"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                maxLength={10}
+                placeholder="e.g. BCF887"
+                className="bg-navy-900 border border-navy-600 px-3 py-2.5 text-sm text-white placeholder-navy-500 font-display tracking-widest uppercase focus:outline-none focus:border-gold-500 transition-colors"
+              />
+            </div>
+          )}
+
           {/* Turnstile — only on sign-up */}
           {mode === 'signup' && TURNSTILE_SITE_KEY && (
             <div className="flex justify-center">
@@ -180,7 +199,7 @@ export function AuthPage() {
       </div>
 
       <p className="mt-6 text-xs text-navy-500 text-center">
-        ⚽ World Cup 2026 · June–July 2026
+        World Cup 2026 · June–July 2026
       </p>
     </div>
   );

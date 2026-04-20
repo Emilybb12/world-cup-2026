@@ -87,7 +87,7 @@ function MemberCard({ picks, isYou }: { picks: UserPicks; isYou: boolean }) {
       </div>
 
       <div className="px-6 py-5">
-        <p className="text-xs font-display tracking-widest uppercase text-navy-300 mb-2">🏆 Champion Pick</p>
+        <p className="text-xs font-display tracking-widest uppercase text-navy-300 mb-2">Champion Pick</p>
         {champion ? (
           <p className="font-display font-700 text-xl tracking-wide text-white uppercase">
             {TEAM_FLAGS[champion] ?? ''} {champion}
@@ -116,7 +116,6 @@ export function LeagueLeaderboard({ allPicks, members, currentUserId }: Props) {
 
       {allAgree && (
         <div className="mb-8 border-2 border-gold-500 bg-gold-500 px-8 py-4 flex items-center gap-3">
-          <span className="text-2xl">🤝</span>
           <p className="font-display font-700 text-lg tracking-wide text-navy-900 uppercase">
             Everyone picked {TEAM_FLAGS[uniqueChampions[0]] ?? ''} {uniqueChampions[0]} to win it all!
           </p>

@@ -147,7 +147,6 @@ export function MatchesTab({ matches, hasCreds, loading }: Props) {
   if (!hasCreds) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center gap-4">
-        <span className="text-4xl">🔑</span>
         <p className="font-display font-800 text-xl text-white uppercase tracking-wide">API key not set</p>
         <p className="text-sm text-navy-300 max-w-sm">
           Add your <span className="text-gold-400 font-700">VITE_FD_TOKEN</span> from{' '}
@@ -170,7 +169,6 @@ export function MatchesTab({ matches, hasCreds, loading }: Props) {
   if (matches.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center gap-3">
-        <span className="text-4xl">📅</span>
         <p className="font-display font-800 text-xl text-white uppercase tracking-wide">No matches found</p>
         <p className="text-sm text-navy-400">Check back once the tournament begins in June 2026.</p>
       </div>
@@ -211,7 +209,7 @@ export function MatchesTab({ matches, hasCreds, loading }: Props) {
         const isToday = dateStr === todayStr;
         const isYesterday = dateStr === new Date(Date.now() - 86400000).toLocaleDateString('en-CA');
         const label = isToday
-          ? '⚽ Today'
+          ? 'Today'
           : isYesterday
           ? 'Yesterday'
           : formatDate(dayMatches[0].utcDate);

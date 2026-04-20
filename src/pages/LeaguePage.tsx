@@ -13,11 +13,11 @@ import { signOut } from '../hooks/useAuth';
 
 type Tab = 'leaderboard' | 'matches' | 'groups' | 'bracket';
 
-const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'leaderboard', label: 'Leaderboard', icon: '📊' },
-  { id: 'matches',     label: 'Matches',     icon: '⚽' },
-  { id: 'groups',      label: 'Group Stage', icon: '🗂️' },
-  { id: 'bracket',     label: 'Bracket',     icon: '🏆' },
+const TABS: { id: Tab; label: string }[] = [
+  { id: 'leaderboard', label: 'Leaderboard' },
+  { id: 'matches',     label: 'Matches'     },
+  { id: 'groups',      label: 'Group Stage' },
+  { id: 'bracket',     label: 'Bracket'     },
 ];
 
 interface Props {
@@ -98,7 +98,7 @@ export function LeaguePage({ profile }: Props) {
                 className="text-navy-400 hover:text-white transition-colors text-sm font-display tracking-widest"
                 title="All leagues"
               >
-                ←
+                Back
               </button>
               <div className="border-2 border-gold-500 px-2 py-1 flex flex-col items-center">
                 <span className="font-display font-800 text-gold-400 text-lg leading-none tracking-widest">FIFA</span>
@@ -110,7 +110,7 @@ export function LeaguePage({ profile }: Props) {
                   {league.name}
                 </p>
                 <h1 className="font-display text-2xl font-800 tracking-wide text-white uppercase leading-none">
-                  World Cup ⚽
+                  World Cup 2026
                 </h1>
               </div>
             </div>
@@ -148,7 +148,7 @@ export function LeaguePage({ profile }: Props) {
                 className="text-xs font-display tracking-widest uppercase text-navy-200 hover:text-white transition-colors border border-navy-600 px-3 py-2 hover:border-navy-400"
                 title="Sign out"
               >
-                ⇄
+                Sign out
               </button>
             </div>
           </div>
@@ -166,13 +166,12 @@ export function LeaguePage({ profile }: Props) {
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={[
-                  'shrink-0 px-4 py-3 font-display font-700 text-xs tracking-widest uppercase border-b-2 transition-all duration-150 flex items-center gap-1.5',
+                  'shrink-0 px-4 py-3 font-display font-700 text-xs tracking-widest uppercase border-b-2 transition-all duration-150',
                   tab === t.id
                     ? 'border-gold-500 text-gold-400'
                     : 'border-transparent text-navy-300 hover:text-white',
                 ].join(' ')}
               >
-                <span>{t.icon}</span>
                 {t.label}
               </button>
             ))}
@@ -207,7 +206,6 @@ export function LeaguePage({ profile }: Props) {
                     : 'border-l-transparent text-navy-300 hover:text-white hover:bg-navy-800',
                 ].join(' ')}
               >
-                <span className="text-base">{t.icon}</span>
                 {t.label}
               </button>
             ))}

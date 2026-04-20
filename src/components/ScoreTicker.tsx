@@ -93,7 +93,7 @@ export function ScoreTicker({ matches }: Props) {
       <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
         <div className="flex items-center gap-3 py-2 overflow-x-auto scrollbar-hide">
           <span className="text-xs font-display font-700 tracking-widest uppercase text-navy-400 shrink-0">
-            ⚽ Today
+            Today
           </span>
           <div className="w-px h-4 bg-navy-700 shrink-0" />
           <div className="flex gap-2">
