@@ -67,12 +67,6 @@ export function AuthPage() {
       {/* Player silhouettes */}
       <PlayerSilhouettesBackground />
 
-      {/* Diagonal accent lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-96 h-px bg-gold-500/10 rotate-45 origin-left" style={{ width: '200%' }} />
-        <div className="absolute -bottom-20 -right-20 w-96 h-px bg-gold-500/10 rotate-45 origin-right" style={{ width: '200%' }} />
-      </div>
-
       {/* Header */}
       <div className="mb-8 flex flex-col items-center gap-3">
         <div className="border-2 border-gold-500 px-4 py-2 flex flex-col items-center">
